@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { taxDataByMonth, availableTaxMonths, availableTaxYears, availableTaxYearsData } from './mockData';
+import { taxDataByMonth, availableTaxMonths, availableTaxYears, availableTaxYearsData } from './mockdata';
 import { Header } from './Header';
 import { ListItem } from './ListItem';
 import { CheckIcon, ChevronRightIcon } from './Icons';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { payslipDataByMonth, availablePayslipMonths, availablePayslipYears, availablePayslipYearsData } from './mockData';
+import { payslipDataByMonth, availablePayslipMonths, availablePayslipYears, availablePayslipYearsData } from './mockdata';
 import { EyeIcon, EyeOffIcon, InfoIcon, CheckIcon, ChevronRightIcon } from './Icons';
 import { Header } from './Header';
 

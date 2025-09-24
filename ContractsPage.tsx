@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Header } from './Header';
-import { contractsData, contractTypes } from './mockData';
+import { contractsData, contractTypes } from './mockdata';
 import { BuildingOfficeIcon, ChevronRightIcon } from './Icons';
 import type { Contract } from './types';
 

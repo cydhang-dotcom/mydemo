@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { attendanceDataByMonth, availableAttendanceMonths } from './mockData';
+import { attendanceDataByMonth, availableAttendanceMonths } from './mockdata';
 import { Header } from './Header';
 import { 
     ChevronLeftIcon,

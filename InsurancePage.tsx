@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { insuranceDataByMonth, availableMonths, availableYears, availableYearsData } from './mockData';
+import { insuranceDataByMonth, availableInsuranceMonths, availableInsuranceYears, availableInsuranceYearsData } from './mockdata';
 import { Header } from './Header';
 import { ShieldCheckIcon, BriefcaseIcon, UsersIcon, HomeIcon, HeartIcon, CheckIcon, ChevronRightIcon } from './Icons';
 
@@ -64,8 +64,8 @@ type ViewMode = 'details' | 'selection';
 
 export const InsurancePage = ({ onBack }: { onBack: () => void }) => {
     const [viewMode, setViewMode] = useState<ViewMode>('details');
-    const [selectedMonth, setSelectedMonth] = useState(availableMonths[0]);
-    const [activeYearInSelector, setActiveYearInSelector] = useState(availableMonths[0].substring(0, 4));
+    const [selectedMonth, setSelectedMonth] = useState(availableInsuranceMonths[0]);
+    const [activeYearInSelector, setActiveYearInSelector] = useState(availableInsuranceMonths[0].substring(0, 4));
 
     const handleMonthSelect = (month: string) => {
         setSelectedMonth(month);
@@ -87,7 +87,7 @@ export const InsurancePage = ({ onBack }: { onBack: () => void }) => {
                 <main className="flex-grow flex">
                     <div className="w-1/3 bg-slate-100/70 border-r border-slate-200">
                         <ul>
-                            {availableYears.map((year) => (
+                            {availableInsuranceYears.map((year) => (
                                 <li
                                     key={year}
                                     onClick={() => setActiveYearInSelector(year)}
@@ -106,7 +106,7 @@ export const InsurancePage = ({ onBack }: { onBack: () => void }) => {
                     </div>
                     <div className="w-2/3">
                         <ul className="divide-y divide-slate-100">
-                            {(availableYearsData[activeYearInSelector] || []).map((month) => (
+                            {(availableInsuranceYearsData[activeYearInSelector] || []).map((month) => (
                                 <li 
                                     key={month} 
                                     onClick={() => handleMonthSelect(month)} 
