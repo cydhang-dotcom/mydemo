@@ -81,3 +81,74 @@ export type Coupon = {
   tags: string[];
   status: 'active' | 'used';
 };
+
+export type EmployeeInfoSection = {
+    id: string;
+    label: string;
+    status: '已完善' | '未完善';
+    actionType: 'navigate' | 'modal';
+    target: string;
+};
+
+export type ContactInfo = {
+    mobile: string;
+    email: string;
+    address: string;
+};
+
+export type PersonalInfo = {
+    nativePlace: string;
+    isVeteran: string;
+    maritalStatus: string;
+    hasChildren: string;
+    householdType: string;
+    householdAddress: string;
+    hasResidencePermit: string;
+    residencePermitNumber: string;
+    bloodType: string;
+    firstWorkDate: string;
+};
+
+export type WorkExperience = {
+    id: string;
+    company: string;
+    position: string;
+    startDate: string;
+    endDate: string;
+};
+
+export type ShareRecord = {
+  id: string;
+  name: string;
+  date: string;
+  status: string;
+};
+
+export type ServiceStatus = '未处理' | '处理中' | '完成';
+
+export type ServiceTimelineEvent = {
+    id: string;
+    title: string;
+    status: string;
+    timestamp: string;
+    details?: { [key: string]: string };
+    description?: string[];
+};
+
+export type Service = {
+    id: string;
+    type: string;
+    target: string;
+    status: ServiceStatus;
+    timeline: ServiceTimelineEvent[];
+};
+
+export type Colleague = {
+  id: string;
+  name: string;
+  avatar: string;
+  department: string;
+  title: string;
+  phone: string;
+  initial: string;
+};

@@ -5,3 +5,7 @@ export * from './attendance';
 export * from './contracts';
 export * from './documents';
 export * from './coupons';
+export * from './employeeInfo';
+export * from './share';
+export * from './services';
+export * from './colleagues';

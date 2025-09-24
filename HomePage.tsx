@@ -4,8 +4,9 @@ import {
     UserCircleIcon, TicketIcon, FolderIcon, ShareIcon, BriefcaseIcon, UsersIcon,
     ChevronDownIcon, ChevronRightIcon 
 } from './Icons';
+import { servicesData } from './mockdata';
 
-export const HomePage = ({ navigateTo }: { navigateTo: (page: string) => void; }) => {
+export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: any) => void; }) => {
     const mainActions = [
         { name: '工资单', icon: <WalletIcon />, action: () => navigateTo('payslip') },
         { name: '个税', icon: <ReceiptTaxIcon />, action: () => navigateTo('tax') },
@@ -14,18 +15,16 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string) => void; }
         { name: '考勤汇总', icon: <CalendarIcon />, action: () => navigateTo('attendance') },
     ];
     
-    const serviceItems = [
-        { title: '个人服务', subtitle: '新增任务 7 个月前' },
-        { title: '员工增员', subtitle: '社保 公积金 工资 个税' },
-        { title: '个人服务', subtitle: '新增任务 3年前' },
-    ];
+    const serviceItems = servicesData.slice(0, 3);
+    const inProgressCount = servicesData.filter(s => s.status === '处理中').length;
 
     const settingItems = [
         { name: '设置', icon: <CogIcon />, action: () => {} },
-        { name: '个人信息', icon: <UserCircleIcon className="w-6 h-6" />, action: () => {} },
+        { name: '个人信息', icon: <UserCircleIcon className="w-6 h-6" />, action: () => navigateTo('employee-info') },
         { name: '优惠券', icon: <TicketIcon />, action: () => navigateTo('coupons') },
         { name: '档案包', icon: <FolderIcon />, action: () => navigateTo('documents') },
-        { name: '分享班步', icon: <ShareIcon />, action: () => {} },
+        { name: '分享班步', icon: <ShareIcon />, action: () => navigateTo('share') },
+        { name: '我的同事', icon: <UsersIcon />, action: () => navigateTo('colleagues') },
     ];
 
     return (
@@ -69,16 +68,16 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string) => void; }
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex items-center">
                             <h3 className="font-bold text-slate-900 text-base">我的服务</h3>
-                            <div className="ml-2 w-5 h-5 bg-red-500 text-white text-xs font-semibold rounded-full flex items-center justify-center">5</div>
+                            {inProgressCount > 0 && <div className="ml-2 w-5 h-5 bg-red-500 text-white text-xs font-semibold rounded-full flex items-center justify-center">{inProgressCount}</div>}
                         </div>
-                        <a href="#" className="text-sm text-slate-400 hover:text-[#5Fc38f] flex items-center">详情 <ChevronRightIcon/></a>
+                        <button onClick={() => navigateTo('services')} className="text-sm text-slate-400 hover:text-[#5Fc38f] flex items-center">详情 <ChevronRightIcon/></button>
                     </div>
                     <div className="space-y-2">
                         {serviceItems.map((item, i) => (
-                           <div key={i} className="flex justify-between items-center p-3 -m-3 rounded-lg hover:bg-slate-50 cursor-pointer">
+                           <div key={i} onClick={() => navigateTo('service-details', { serviceId: item.id })} className="flex justify-between items-center p-3 -m-3 rounded-lg hover:bg-slate-50 cursor-pointer">
                                <div>
-                                   <p className="font-semibold text-sm text-slate-800">{item.title}</p>
-                                   <p className="text-xs text-slate-400 mt-1">{item.subtitle}</p>
+                                   <p className="font-semibold text-sm text-slate-800">{item.type}</p>
+                                   <p className="text-xs text-slate-400 mt-1">服务对象: {item.target}</p>
                                </div>
                                <ChevronRightIcon />
                            </div>
