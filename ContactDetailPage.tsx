@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from './Header';
+import { SubPageHeader } from './SubPageHeader';
 import { colleagues, featuredContacts } from './mockdata';
 import { PhoneIcon, MailIcon } from './icons';
 
@@ -8,20 +8,29 @@ export const ContactDetailPage = ({ onBack, contactId }: { onBack: () => void; c
 
     if (!contact) {
         return (
-            <div className="w-full bg-white min-h-screen">
-                <Header title="联系人详情" onBack={onBack} />
-                <p className="p-4 text-center text-slate-500">未找到该联系人。</p>
+            <div className="w-full bg-slate-100 min-h-screen flex flex-col">
+                <SubPageHeader title="联系人详情" onBack={onBack} />
+                <main className="flex-grow -mt-10 px-4 pb-4">
+                    <div className="bg-white p-5 rounded-xl shadow-sm text-center text-slate-500">
+                         未找到该联系人。
+                    </div>
+                </main>
             </div>
         );
     }
+
+    const isFeatured = featuredContacts.some(fc => fc.id === contactId);
+    const avatarStyles = isFeatured 
+        ? 'bg-[#5fc38f] text-white' 
+        : 'bg-blue-100 text-blue-600';
     
     return (
-        <div className="w-full bg-slate-100 min-h-screen">
-            <Header title={contact.name} onBack={onBack} />
-            <main className="p-5 space-y-5">
+        <div className="w-full bg-slate-100 min-h-screen flex flex-col">
+            <SubPageHeader title={contact.name} onBack={onBack} />
+            <main className="flex-grow -mt-10 px-4 pb-4 space-y-4">
                 <div className="bg-white p-5 rounded-xl shadow-sm">
                     <div className="flex items-center">
-                        <div className="w-16 h-16 bg-blue-500 text-white font-bold text-2xl rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                        <div className={`w-16 h-16 ${avatarStyles} font-bold text-2xl rounded-lg flex items-center justify-center mr-4 flex-shrink-0`}>
                             {contact.avatarText}
                         </div>
                         <div>

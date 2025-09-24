@@ -30,7 +30,7 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
     return (
          <div className="w-full flex flex-col min-h-full bg-slate-100">
             <div className="bg-[#5Fc38f] px-6 pt-6 pb-16 text-white">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center h-9">
                     <div className="flex items-center cursor-pointer group" onClick={() => alert('切换公司')}>
                         <div className="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-md flex items-center justify-center mr-3">
                            <BuildingOfficeIcon className="w-5 h-5"/>
@@ -40,7 +40,7 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
                     </div>
                 </div>
 
-                <div className="mt-8 flex justify-between items-center">
+                <div className="mt-8 flex justify-between items-center h-16">
                     <div className="flex items-center space-x-4">
                         <UserCircleIcon className="w-16 h-16 text-white/80" />
                         <div>
