@@ -5,6 +5,8 @@ import { TaxPage } from './TaxPage';
 import { InsurancePage } from './InsurancePage';
 import { AttendancePage } from './AttendancePage';
 import { ContractsPage } from './ContractsPage';
+import { DocumentsPage } from './DocumentsPage';
+import { CouponsPage } from './CouponsPage';
 
 export const App = () => {
     const [page, setPage] = useState('home');
@@ -23,6 +25,10 @@ export const App = () => {
                 return <AttendancePage onBack={() => navigateTo('home')} />;
             case 'contracts':
                 return <ContractsPage onBack={() => navigateTo('home')} />;
+            case 'documents':
+                return <DocumentsPage onBack={() => navigateTo('home')} />;
+            case 'coupons':
+                return <CouponsPage onBack={() => navigateTo('home')} />;
             case 'home':
             default:
                 return <HomePage navigateTo={navigateTo} />;

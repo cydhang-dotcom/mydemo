@@ -21,11 +21,11 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string) => void; }
     ];
 
     const settingItems = [
-        { name: '设置', icon: <CogIcon /> },
-        { name: '个人信息', icon: <UserCircleIcon className="w-6 h-6" /> },
-        { name: '优惠券', icon: <TicketIcon /> },
-        { name: '档案包', icon: <FolderIcon /> },
-        { name: '分享班步', icon: <ShareIcon /> },
+        { name: '设置', icon: <CogIcon />, action: () => {} },
+        { name: '个人信息', icon: <UserCircleIcon className="w-6 h-6" />, action: () => {} },
+        { name: '优惠券', icon: <TicketIcon />, action: () => navigateTo('coupons') },
+        { name: '档案包', icon: <FolderIcon />, action: () => navigateTo('documents') },
+        { name: '分享班步', icon: <ShareIcon />, action: () => {} },
     ];
 
     return (
@@ -88,7 +88,7 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string) => void; }
                 
                 <div className="m-4 bg-white rounded-xl shadow-sm">
                    {settingItems.map((item) => (
-                       <div key={item.name} className="flex justify-between items-center p-4 hover:bg-slate-50 cursor-pointer first:rounded-t-xl last:rounded-b-xl">
+                       <div key={item.name} onClick={item.action} className="flex justify-between items-center p-4 hover:bg-slate-50 cursor-pointer first:rounded-t-xl last:rounded-b-xl">
                            <div className="flex items-center space-x-4 text-slate-600">
                                {React.cloneElement(item.icon, { className: 'w-6 h-6' })}
                                <span className="text-sm font-medium">{item.name}</span>

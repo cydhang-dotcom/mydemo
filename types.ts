@@ -63,3 +63,21 @@ export type Contract = {
     periodEnd: string | null;
     signingDate: string;
 };
+
+export type Document = {
+  id: string;
+  company: string;
+  title: string;
+  date: string;
+};
+
+export type Coupon = {
+  id: string;
+  title: string;
+  description: string;
+  validityStart: string;
+  validityEnd: string;
+  value: number;
+  tags: string[];
+  status: 'active' | 'used';
+};
