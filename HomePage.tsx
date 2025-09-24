@@ -10,8 +10,8 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string) => void; }
         { name: '工资单', icon: <WalletIcon />, action: () => navigateTo('payslip') },
         { name: '个税', icon: <ReceiptTaxIcon />, action: () => navigateTo('tax') },
         { name: '五险一金', icon: <ShieldCheckIcon />, action: () => navigateTo('insurance') },
-        { name: '合同协议', icon: <DocumentTextIcon />, action: () => {} },
-        { name: '考勤汇总', icon: <CalendarIcon />, action: () => {} },
+        { name: '合同协议', icon: <DocumentTextIcon />, action: () => navigateTo('contracts') },
+        { name: '考勤汇总', icon: <CalendarIcon />, action: () => navigateTo('attendance') },
     ];
     
     const serviceItems = [

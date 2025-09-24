@@ -51,3 +51,15 @@ export type taxData = {
         items: taxDataItem[];
     };
 };
+
+export type Contract = {
+    id: string;
+    type: string;
+    title: string;
+    status: '已签署' | '已到期' | '待签署';
+    name: string;
+    tags: string[];
+    periodStart: string;
+    periodEnd: string | null;
+    signingDate: string;
+};

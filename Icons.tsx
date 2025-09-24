@@ -33,3 +33,9 @@ export const MinusCircleIcon = () => <Icon path="M15 12H9m12 0a9 9 0 11-18 0 9 9
 export const HomeIcon = ({ className }: { className?: string }) => <Icon path="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" className={className} />;
 export const HeartIcon = ({ className }: { className?: string }) => <Icon path="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" className={className} />;
 export const CheckIcon = ({ className }: { className?: string }) => <Icon path="M5 13l4 4L19 7" className={className} />;
+export const BuildingOfficeIcon = ({ className }: { className?: string }) => <Icon path="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6M9 11.25h6M9 15.75h6" className={className} />;
+export const EllipsisHorizontalIcon = ({ className }: { className?: string }) => <Icon path="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm6 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" className={className} />;
+export const MinusIcon = ({ className }: { className?: string }) => <Icon path="M18 12H6" className={className} />;
+export const BullseyeIcon = ({ className }: { className?: string }) => <Icon path="M12 21a9 9 0 110-18 9 9 0 010 18z M12 7a5 5 0 100 10 5 5 0 000-10z" className={className} />;
+export const ChevronUpIcon = ({ className }: { className?: string }) => <Icon path="M19 15l-7-7-7 7" className={className || 'w-6 h-6'} />;
+export const ChevronLeftIcon = ({ className }: { className?: string }) => <Icon path="M15.75 19.5L8.25 12l7.5-7.5" className={className || 'w-6 h-6'} />;

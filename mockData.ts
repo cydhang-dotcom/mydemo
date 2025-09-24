@@ -1,4 +1,4 @@
-import { payslipData as payslipDataType, taxData as taxDataType } from './types';
+import { payslipData as payslipDataType, taxData as taxDataType, Contract as ContractType } from './types';
 
 export const payslipDataByMonth: { [key: string]: payslipDataType } = {
     '2023-07': {
@@ -322,3 +322,107 @@ export const availableYearsData = Object.keys(insuranceDataByMonth).reduce((acc:
 }, {});
 
 export const availableYears = Object.keys(availableYearsData).sort((a, b) => b.localeCompare(a));
+
+export const attendanceDataByMonth: { [key: string]: any } = {
+    '2025-09': {
+        company: '上海云才网络技术有限公司',
+        employee: {
+            name: '杭志平',
+            avatarText: '志平',
+            plan: '研发考勤方案',
+            title: '研发中心 研发总监'
+        },
+        anomalies: {
+            '未打卡': {
+                count: 34,
+                items: [
+                    { date: '2025-09-01', description: '上下班未打卡' },
+                    { date: '2025-09-02', description: '上下班未打卡' },
+                    { date: '2025-09-03', description: '上下班未打卡' },
+                    { date: '2025-09-04', description: '上下班未打卡' },
+                    { date: '2025-09-05', description: '上下班未打卡' },
+                    { date: '2025-09-08', description: '上下班未打卡' },
+                    { date: '2025-09-09', description: '上下班未打卡' },
+                    { date: '2025-09-10', description: '上下班未打卡' },
+                ]
+            }
+        }
+    },
+    '2025-08': {
+        company: '上海云才网络技术有限公司',
+        employee: {
+            name: '杭志平',
+            avatarText: '志平',
+            plan: '研发考勤方案',
+            title: '研发中心 研发总监'
+        },
+        anomalies: {
+            '未打卡': {
+                count: 12,
+                items: [
+                    { date: '2025-08-11', description: '上下班未打卡' },
+                    { date: '2025-08-15', description: '上班未打卡' },
+                    { date: '2025-08-22', description: '下班未打卡' },
+                ]
+            }
+        }
+    },
+    '2025-07': {
+        company: '上海云才网络技术有限公司',
+        employee: {
+            name: '杭志平',
+            avatarText: '志平',
+            plan: '研发考勤方案',
+            title: '研发中心 研发总监'
+        },
+        anomalies: {
+            '未打卡': {
+                count: 5,
+                items: [
+                    { date: '2025-07-04', description: '下班未打卡' },
+                    { date: '2025-07-18', description: '上班未打卡' },
+                ]
+            }
+        }
+    }
+};
+
+export const availableAttendanceMonths = Object.keys(attendanceDataByMonth).sort((a, b) => b.localeCompare(a));
+
+export const contractsData: ContractType[] = [
+    {
+        id: '1',
+        type: '用工合同',
+        title: '无固定期限合同签订',
+        status: '已签署',
+        name: '云才劳动合同',
+        tags: ['无固定'],
+        periodStart: '2022-03-03',
+        periodEnd: null,
+        signingDate: '2022-03-02',
+    },
+    {
+        id: '2',
+        type: '用工合同',
+        title: '固定期限合同签订',
+        status: '已到期',
+        name: '云才劳动合同',
+        tags: ['3年'],
+        periodStart: '2019-03-03',
+        periodEnd: '2022-03-02',
+        signingDate: '2019-03-02',
+    },
+    {
+        id: '3',
+        type: '保密协议',
+        title: '保密与竞业协议',
+        status: '已签署',
+        name: '云才保密协议',
+        tags: ['通用'],
+        periodStart: '2019-03-03',
+        periodEnd: null,
+        signingDate: '2019-03-02',
+    }
+];
+
+export const contractTypes = [...new Set(contractsData.map(c => c.type))];
