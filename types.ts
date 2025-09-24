@@ -142,13 +142,3 @@ export type Service = {
     status: ServiceStatus;
     timeline: ServiceTimelineEvent[];
 };
-
-export type Colleague = {
-  id: string;
-  name: string;
-  avatar: string;
-  department: string;
-  title: string;
-  phone: string;
-  initial: string;
-};

@@ -24,7 +24,6 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
         { name: '优惠券', icon: <TicketIcon />, action: () => navigateTo('coupons') },
         { name: '档案包', icon: <FolderIcon />, action: () => navigateTo('documents') },
         { name: '分享班步', icon: <ShareIcon />, action: () => navigateTo('share') },
-        { name: '我的同事', icon: <UsersIcon />, action: () => navigateTo('colleagues') },
     ];
 
     return (

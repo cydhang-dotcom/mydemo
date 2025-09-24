@@ -41,5 +41,3 @@ export const ChevronUpIcon = ({ className }: { className?: string }) => <Icon pa
 export const ChevronLeftIcon = ({ className }: { className?: string }) => <Icon path="M15.75 19.5L8.25 12l7.5-7.5" className={className || 'w-6 h-6'} />;
 export const PlusIcon = ({ className }: { className?: string }) => <Icon path="M12 4.5v15m7.5-7.5h-15" className={className} />;
 export const XMarkIcon = ({ className }: { className?: string }) => <Icon path="M6 18L18 6M6 6l12 12" className={className} />;
-export const MagnifyingGlassIcon = ({ className }: { className?: string }) => <Icon path="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" className={className} />;
-export const PhoneIcon = ({ className }: { className?: string }) => <Icon path="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.211-.998-.552-1.331l-6.23-6.23a1.5 1.5 0 00-2.12 0l-1.415 1.414a.75.75 0 01-1.06 0l-2.829-2.828a.75.75 0 010-1.06l1.414-1.414a1.5 1.5 0 000-2.12l-6.23-6.23A1.875 1.875 0 003.622 2.25H2.25C2.25 3.122 2.25 6.75 2.25 6.75z" className={className} />;

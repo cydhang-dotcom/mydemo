@@ -13,7 +13,6 @@ import { WorkHistoryPage } from './WorkHistoryPage';
 import { SharePage } from './SharePage';
 import { ServicesPage } from './ServicesPage';
 import { ServiceDetailsPage } from './ServiceDetailsPage';
-import { ColleaguesPage } from './ColleaguesPage';
 
 
 export const App = () => {
@@ -62,8 +61,6 @@ export const App = () => {
                 return <ServicesPage onBack={handleBack} navigateTo={navigateTo} />;
             case 'service-details':
                  return <ServiceDetailsPage onBack={handleBack} serviceId={selectedServiceId!} />;
-            case 'colleagues':
-                return <ColleaguesPage onBack={handleBack} />;
             case 'home':
             default:
                 return <HomePage navigateTo={navigateTo} />;

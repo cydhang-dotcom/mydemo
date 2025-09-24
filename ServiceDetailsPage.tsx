@@ -78,19 +78,26 @@ export const ServiceDetailsPage = ({ onBack, serviceId }: { onBack: () => void; 
         );
     }
     
-    let processingTime = '-';
+    let submissionTime = '-';
     let totalDuration = '-';
 
     if (service.timeline && service.timeline.length > 0) {
         // Timeline is sorted descending, last item is the oldest (start)
         const startTime = new Date(service.timeline[service.timeline.length - 1].timestamp);
-        processingTime = startTime.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+        submissionTime = startTime.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
         
+        let diff = 0;
+
         if (service.status === '完成' && service.timeline.length > 1) {
             // First item is the newest (end)
             const endTime = new Date(service.timeline[0].timestamp);
-            const diff = endTime.getTime() - startTime.getTime();
-            
+            diff = endTime.getTime() - startTime.getTime();
+        } else if (service.status === '处理中') {
+            const now = new Date();
+            diff = now.getTime() - startTime.getTime();
+        }
+
+        if (diff > 0) {
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -102,8 +109,6 @@ export const ServiceDetailsPage = ({ onBack, serviceId }: { onBack: () => void; 
             if (minutes > 0 && days === 0) durationParts.push(`${minutes}分钟`);
 
             totalDuration = durationParts.join('') || '小于1分钟';
-        } else if (service.status === '处理中') {
-            totalDuration = '进行中';
         }
     }
     
@@ -131,8 +136,8 @@ export const ServiceDetailsPage = ({ onBack, serviceId }: { onBack: () => void; 
 
                     <div className="grid grid-cols-2 gap-x-6">
                         <div>
-                            <p className="text-sm text-green-200">办理时间</p>
-                            <p className="font-semibold text-white mt-1 text-base">{processingTime}</p>
+                            <p className="text-sm text-green-200">提交时间</p>
+                            <p className="font-semibold text-white mt-1 text-base">{submissionTime}</p>
                         </div>
                         <div>
                             <p className="text-sm text-green-200">总耗时</p>
