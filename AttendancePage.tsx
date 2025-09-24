@@ -6,7 +6,7 @@ import {
     ChevronRightIcon,
     ChevronUpIcon,
     ChevronDownIcon
-} from './Icons';
+} from './icons';
 
 export const AttendancePage = ({ onBack }: { onBack: () => void }) => {
     const [currentMonthIndex, setCurrentMonthIndex] = useState(0);

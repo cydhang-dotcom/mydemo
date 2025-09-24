@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { payslipDataByMonth, availablePayslipMonths, availablePayslipYears, availablePayslipYearsData } from './mockdata';
-import { EyeIcon, EyeOffIcon, InfoIcon, CheckIcon, ChevronRightIcon } from './Icons';
+import { EyeIcon, EyeOffIcon, InfoIcon, CheckIcon, ChevronRightIcon } from './icons';
 import { Header } from './Header';
 
 type ViewMode = 'details' | 'selection';

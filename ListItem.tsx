@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRightIcon } from './Icons';
+import { ChevronRightIcon } from './icons';
 
 // FIX: Define props with an interface and use React.FC to correctly type the component,
 // which resolves issues with special props like 'key'.

@@ -1,36 +1,50 @@
-export type payslipData = {
+export interface Contract {
+    id: string;
+    type: string;
+    title: string;
+    status: '已签署' | '已到期';
+    name: string;
+    tags: string[];
+    periodStart: string;
+    periodEnd: string | null;
+    signingDate: string;
+}
+
+export interface PayslipDataItem {
+    label: string;
+    value: string;
+    hasInfo?: boolean;
+}
+
+export interface PayslipSection {
+    title: string;
+    amount: string;
+    items: PayslipDataItem[];
+}
+
+export interface payslipData {
     date: string;
     employeeName: string;
     jobTitle: string;
     department: string;
     payingEntity: string;
     actualPayout: string;
-    grossPay: {
-        title: string;
-        amount: string;
-        items: {
-            label: string;
-            value: string;
-        }[];
-    };
-    deductions: {
-        title: string;
-        amount: string;
-        items: {
-            label: string;
-            value: string;
-            hasInfo?: boolean;
-        }[];
-    };
-};
+    grossPay: PayslipSection;
+    deductions: PayslipSection;
+}
 
-export type taxDataItem = {
+export interface TaxDataItem {
     label: string;
     value: string;
     hasDetails?: boolean;
-};
+}
 
-export type taxData = {
+export interface TaxSection {
+    title: string;
+    items: TaxDataItem[];
+}
+
+export interface taxData {
     incomeMonth: string;
     taxAmount: string;
     incomeType: {
@@ -38,65 +52,44 @@ export type taxData = {
         description: string;
         amount: string;
     };
-    currentPeriod: {
-        title: string;
-        items: taxDataItem[];
-    };
-    cumulative: {
-        title: string;
-        items: taxDataItem[];
-    };
-    taxCalculation: {
-        title: string;
-        items: taxDataItem[];
-    };
-};
+    currentPeriod: TaxSection;
+    cumulative: TaxSection;
+    taxCalculation: TaxSection;
+}
 
-export type Contract = {
+export interface Document {
     id: string;
-    type: string;
+    company: string;
     title: string;
-    status: '已签署' | '已到期' | '待签署';
-    name: string;
+    date: string;
+}
+
+export interface Coupon {
+    id: string;
+    title: string;
+    description: string;
+    validityStart: string;
+    validityEnd: string;
+    value: number;
     tags: string[];
-    periodStart: string;
-    periodEnd: string | null;
-    signingDate: string;
-};
+    status: 'active' | 'used';
+}
 
-export type Document = {
-  id: string;
-  company: string;
-  title: string;
-  date: string;
-};
-
-export type Coupon = {
-  id: string;
-  title: string;
-  description: string;
-  validityStart: string;
-  validityEnd: string;
-  value: number;
-  tags: string[];
-  status: 'active' | 'used';
-};
-
-export type EmployeeInfoSection = {
+export interface EmployeeInfoSection {
     id: string;
     label: string;
     status: '已完善' | '未完善';
     actionType: 'navigate' | 'modal';
     target: string;
-};
+}
 
-export type ContactInfo = {
+export interface ContactInfo {
     mobile: string;
     email: string;
     address: string;
-};
+}
 
-export type PersonalInfo = {
+export interface PersonalInfo {
     nativePlace: string;
     isVeteran: string;
     maritalStatus: string;
@@ -107,38 +100,56 @@ export type PersonalInfo = {
     residencePermitNumber: string;
     bloodType: string;
     firstWorkDate: string;
-};
+}
 
-export type WorkExperience = {
+export interface WorkExperience {
     id: string;
     company: string;
     position: string;
     startDate: string;
     endDate: string;
-};
+}
 
-export type ShareRecord = {
-  id: string;
-  name: string;
-  date: string;
-  status: string;
-};
+export interface ShareRecord {
+    id: string;
+    name: string;
+    date: string;
+    status: string;
+}
 
 export type ServiceStatus = '未处理' | '处理中' | '完成';
 
-export type ServiceTimelineEvent = {
+export interface ServiceTimelineEvent {
     id: string;
     title: string;
     status: string;
     timestamp: string;
-    details?: { [key: string]: string };
-    description?: string[];
-};
+    description: string[];
+}
 
-export type Service = {
+export interface Service {
     id: string;
     type: string;
     target: string;
     status: ServiceStatus;
     timeline: ServiceTimelineEvent[];
-};
+}
+
+export interface Colleague {
+    id: string;
+    name: string;
+    avatarText: string;
+    position: string;
+    departmentId: string;
+    departmentName: string;
+    phone: string;
+    email: string;
+    specialty?: string;
+}
+
+export interface Department {
+    id: string;
+    name: string;
+    memberCount: number;
+    parentId: string | null;
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { taxDataByMonth, availableTaxMonths, availableTaxYears, availableTaxYearsData } from './mockdata';
 import { Header } from './Header';
 import { ListItem } from './ListItem';
-import { CheckIcon, ChevronRightIcon } from './Icons';
+import { CheckIcon, ChevronRightIcon } from './icons';
 
 const Section = ({ title, items }: { title: string; items: { label: string; value: string; hasDetails?: boolean }[] }) => (
     <div className="bg-white rounded-xl shadow-sm p-6">

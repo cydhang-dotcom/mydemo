@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './Header';
 import { contractsData, contractTypes } from './mockdata';
-import { BuildingOfficeIcon, ChevronRightIcon } from './Icons';
+import { BuildingOfficeIcon, ChevronRightIcon } from './icons';
 import type { Contract } from './types';
 
 const ContractCard = ({ contract }: { contract: Contract }) => (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './Header';
 import { Modal } from './Modal';
-import { PlusIcon, XMarkIcon, CalendarIcon } from './Icons';
+import { PlusIcon, XMarkIcon, CalendarIcon } from './icons';
 import { workExperienceData } from './mockdata';
 
 const AddWorkHistoryModalContent = ({ onClose }: { onClose: () => void }) => {

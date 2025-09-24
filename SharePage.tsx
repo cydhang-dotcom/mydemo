@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header } from './Header';
-import { DocumentTextIcon, ChevronRightIcon } from './Icons';
+import { DocumentTextIcon, ChevronRightIcon } from './icons';
 import { shareHistoryData } from './mockdata';
 
 export const SharePage = ({ onBack }: { onBack: () => void }) => {

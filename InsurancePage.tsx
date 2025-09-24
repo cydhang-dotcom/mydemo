@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { insuranceDataByMonth, availableInsuranceMonths, availableInsuranceYears, availableInsuranceYearsData } from './mockdata';
 import { Header } from './Header';
-import { ShieldCheckIcon, BriefcaseIcon, UsersIcon, HomeIcon, HeartIcon, CheckIcon, ChevronRightIcon } from './Icons';
+import { ShieldCheckIcon, BriefcaseIcon, UsersIcon, HomeIcon, HeartIcon, CheckIcon, ChevronRightIcon } from './icons';
 
 const getIconForType = (type: string) => {
     const iconProps = { className: "w-5 h-5" };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from './Header';
 import { documentsData } from './mockdata';
-import { DocumentTextIcon } from './Icons';
+import { DocumentTextIcon } from './icons';
 import type { Document } from './types';
 
 const groupDocumentsByCompany = (documents: Document[]) => {

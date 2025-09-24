@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './Header';
 import { Modal } from './Modal';
-import { ChevronRightIcon, XMarkIcon } from './Icons';
+import { ChevronRightIcon, XMarkIcon } from './icons';
 import { employeeInfoSections, contactInfo as mockContactInfo } from './mockdata';
 import type { ContactInfo } from './types';
 

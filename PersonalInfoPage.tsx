@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from './Header';
 import { personalInfoData } from './mockdata';
-import { ChevronDownIcon, CalendarIcon } from './Icons';
+import { ChevronDownIcon, CalendarIcon } from './icons';
 
 const FormRow = ({ label, value, type = 'text' }: { label: string; value: string; type?: 'text' | 'select' | 'date' | 'input' }) => {
     const renderValue = () => {
