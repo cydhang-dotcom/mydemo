@@ -6,7 +6,8 @@ interface ModalProps {
     children: ReactNode;
 }
 
-export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+// FIX: Use React.FC to correctly type the component and resolve issues with children props.
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
     return (

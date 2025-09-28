@@ -3,7 +3,13 @@ import { Header } from './Header';
 import { couponsData } from './mockdata';
 import type { Coupon } from './types';
 
-const CouponCard = ({ coupon }: { coupon: Coupon }) => {
+// FIX: Define props with an interface and use React.FC to correctly type the component,
+// which resolves issues with special props like 'key'.
+interface CouponCardProps {
+    coupon: Coupon;
+}
+
+const CouponCard: React.FC<CouponCardProps> = ({ coupon }) => {
     const valueColor = coupon.status === 'active' ? 'text-red-500' : 'text-slate-400';
     const isInactive = coupon.status !== 'active';
 

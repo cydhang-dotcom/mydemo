@@ -1,10 +1,17 @@
 import React from 'react';
-import { SubPageHeader } from './SubPageHeader';
+import { Header } from './Header';
 import { colleagues, departments } from './mockdata';
 import type { Colleague } from './types';
 import { ChevronRightIcon } from './icons';
 
-const ColleagueListItem = ({ colleague, onViewDetails }: { colleague: Colleague, onViewDetails: () => void }) => (
+// FIX: Define props with an interface and use React.FC to correctly type the component,
+// which resolves issues with special props like 'key'.
+interface ColleagueListItemProps {
+    colleague: Colleague;
+    onViewDetails: () => void;
+}
+
+const ColleagueListItem: React.FC<ColleagueListItemProps> = ({ colleague, onViewDetails }) => (
     <div onClick={onViewDetails} className="flex items-center px-4 py-3 cursor-pointer hover:bg-slate-50">
         <div className="w-12 h-12 bg-blue-100 text-blue-600 font-bold text-lg rounded-full flex items-center justify-center mr-4 flex-shrink-0">
             {colleague.avatarText}
@@ -24,8 +31,8 @@ export const DepartmentDetailPage = ({ onBack, navigateTo, departmentId }: { onB
     if (!department) {
         return (
             <div className="w-full bg-slate-100 min-h-screen flex flex-col">
-                <SubPageHeader title="部门详情" onBack={onBack} />
-                 <main className="flex-grow -mt-10 px-4 pb-4">
+                <Header title="部门详情" onBack={onBack} />
+                 <main className="flex-grow p-4">
                     <div className="bg-white p-5 rounded-xl shadow-sm text-center text-slate-500">
                         未找到该部门。
                     </div>
@@ -41,8 +48,8 @@ export const DepartmentDetailPage = ({ onBack, navigateTo, departmentId }: { onB
 
     return (
         <div className="w-full bg-slate-100 min-h-screen flex flex-col">
-            <SubPageHeader title={`${department.name} (${department.memberCount})`} onBack={onBack} />
-            <main className="flex-grow -mt-10 px-4 pb-4">
+            <Header title={`${department.name} (${department.memberCount})`} onBack={onBack} />
+            <main className="flex-grow p-4">
                 <div className="bg-white rounded-xl shadow-sm overflow-hidden">
                     {departmentHead && (
                         <>

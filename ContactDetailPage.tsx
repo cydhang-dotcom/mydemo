@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubPageHeader } from './SubPageHeader';
+import { Header } from './Header';
 import { colleagues, featuredContacts } from './mockdata';
 import { PhoneIcon, MailIcon } from './icons';
 
@@ -9,8 +9,8 @@ export const ContactDetailPage = ({ onBack, contactId }: { onBack: () => void; c
     if (!contact) {
         return (
             <div className="w-full bg-slate-100 min-h-screen flex flex-col">
-                <SubPageHeader title="联系人详情" onBack={onBack} />
-                <main className="flex-grow -mt-10 px-4 pb-4">
+                <Header title="联系人详情" onBack={onBack} />
+                <main className="flex-grow p-4">
                     <div className="bg-white p-5 rounded-xl shadow-sm text-center text-slate-500">
                          未找到该联系人。
                     </div>
@@ -26,8 +26,8 @@ export const ContactDetailPage = ({ onBack, contactId }: { onBack: () => void; c
     
     return (
         <div className="w-full bg-slate-100 min-h-screen flex flex-col">
-            <SubPageHeader title={contact.name} onBack={onBack} />
-            <main className="flex-grow -mt-10 px-4 pb-4 space-y-4">
+            <Header title="联系人详情" onBack={onBack} />
+            <main className="flex-grow p-4 space-y-4">
                 <div className="bg-white p-5 rounded-xl shadow-sm">
                     <div className="flex items-center">
                         <div className={`w-16 h-16 ${avatarStyles} font-bold text-2xl rounded-lg flex items-center justify-center mr-4 flex-shrink-0`}>

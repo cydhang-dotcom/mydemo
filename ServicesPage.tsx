@@ -9,7 +9,14 @@ const statusStyles: { [key in ServiceStatus]: string } = {
     '完成': 'text-slate-600 bg-slate-100'
 };
 
-const ServiceCard = ({ service, onViewDetails }: { service: Service, onViewDetails: () => void }) => {
+// FIX: Define props with an interface and use React.FC to correctly type the component,
+// which resolves issues with special props like 'key'.
+interface ServiceCardProps {
+    service: Service;
+    onViewDetails: () => void;
+}
+
+const ServiceCard: React.FC<ServiceCardProps> = ({ service, onViewDetails }) => {
     return (
         <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
             <div className="flex justify-between items-start">

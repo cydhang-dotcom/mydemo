@@ -13,29 +13,36 @@ import {
     ChevronDownIcon,
 } from './icons';
 
-const DailyHeader = ({ navigateTo }: { navigateTo: (page: string, params?: any) => void; }) => (
-    <div className="bg-[#5Fc38f] px-6 pt-6 pb-16 text-white">
+// A standardized header for main pages, showing the company selector.
+const CompanySelectorHeader = () => (
+    <header className="bg-white px-4 pt-6 pb-4 sticky top-0 z-10 border-b border-slate-100">
         <div className="flex justify-between items-center h-9">
             <div className="flex items-center cursor-pointer group" onClick={() => alert('切换公司')}>
-                <div className="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-md flex items-center justify-center mr-3">
-                   <BuildingOfficeIcon className="w-5 h-5"/>
+                <div className="w-9 h-9 bg-green-100/60 rounded-md flex items-center justify-center mr-3">
+                   <BuildingOfficeIcon className="w-5 h-5 text-[#5fc38f]"/>
                 </div>
-                <h1 className="text-white font-semibold text-base">上海云才网络技术有限公司</h1>
-                <ChevronDownIcon className="w-5 h-5 ml-1.5 text-white/70 group-hover:text-white transition-colors" />
+                <h1 className="text-slate-800 font-semibold text-base">上海云才网络技术有限公司</h1>
+                <ChevronDownIcon className="w-5 h-5 ml-1.5 text-slate-500 group-hover:text-slate-800 transition-colors" />
             </div>
         </div>
+    </header>
+);
 
-        <div className="mt-8 flex items-center h-16">
+// A standardized card for displaying user information on main pages.
+const UserHeaderCard = () => (
+    <div className="p-5 bg-white rounded-xl shadow-sm">
+         <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-                <UserCircleIcon className="w-16 h-16 text-white/80" />
+                <UserCircleIcon className="w-16 h-16 text-slate-500" />
                 <div>
-                    <h2 className="font-bold text-2xl">hand</h2>
-                    <p className="text-sm text-green-200 mt-1">人事主管 员工</p>
+                    <h2 className="font-bold text-2xl text-slate-800">hand</h2>
+                    <p className="text-sm text-slate-500 mt-1">人事主管 员工</p>
                 </div>
             </div>
         </div>
     </div>
 );
+
 
 const AttendanceSection = () => {
     const [time, setTime] = useState(new Date());
@@ -151,8 +158,9 @@ const HrServicesSection = () => {
 export const DailyPage = ({ navigateTo }: { navigateTo: (page: string, params?: any) => void; }) => {
     return (
         <div className="w-full flex flex-col min-h-full bg-slate-100">
-            <DailyHeader navigateTo={navigateTo} />
-            <main className="flex-grow p-4 space-y-4 -mt-10 pb-24">
+            <CompanySelectorHeader />
+            <main className="flex-grow p-4 space-y-4 pb-24">
+                <UserHeaderCard />
                 <AttendanceSection />
                 <TodoSection />
                 <HrServicesSection />

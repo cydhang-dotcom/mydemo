@@ -17,7 +17,14 @@ const timelineStatusStyles: { [key: string]: string } = {
     '完成': 'text-slate-600 bg-slate-100',
 };
 
-const TimelineItem = ({ item, isLast }: { item: ServiceTimelineEvent, isLast: boolean }) => (
+// FIX: Define props with an interface and use React.FC to correctly type the component,
+// which resolves issues with special props like 'key'.
+interface TimelineItemProps {
+    item: ServiceTimelineEvent;
+    isLast: boolean;
+}
+
+const TimelineItem: React.FC<TimelineItemProps> = ({ item, isLast }) => (
     <div className="flex">
         <div className="flex flex-col items-center mr-4">
             <div>

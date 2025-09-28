@@ -1,175 +1,180 @@
 import React, { useState } from 'react';
 import { payslipDataByMonth, availablePayslipMonths, availablePayslipYears, availablePayslipYearsData } from './mockdata';
-import { EyeIcon, EyeOffIcon, InfoIcon, CheckIcon, ChevronRightIcon } from './icons';
+import { EyeIcon, EyeOffIcon, CheckIcon, ChevronRightIcon, XMarkIcon } from './icons';
 import { Header } from './Header';
+import { Modal } from './Modal';
 
-type ViewMode = 'details' | 'selection';
+const BreakdownRow: React.FC<{ label: string, value: string | undefined }> = ({ label, value }) => (
+    <div className="flex justify-between items-center py-3">
+        <span className="text-base text-slate-600">{label}</span>
+        <span className="font-mono font-semibold text-slate-800 text-base text-right">{value}</span>
+    </div>
+);
 
 export const PayslipPage = ({ onBack }: { onBack: () => void }) => {
-    const [viewMode, setViewMode] = useState<ViewMode>('details');
+    const [isMonthSelectorOpen, setIsMonthSelectorOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(availablePayslipMonths[0]);
     const [activeYearInSelector, setActiveYearInSelector] = useState(availablePayslipMonths[0].substring(0, 4));
     const [showSalary, setShowSalary] = useState(true);
 
     const handleMonthSelect = (month: string) => {
         setSelectedMonth(month);
-        setViewMode('details');
-    };
-    
-    const handleBack = () => {
-        if (viewMode === 'selection') {
-            setViewMode('details');
-        } else {
-            onBack();
-        }
+        setIsMonthSelectorOpen(false);
     };
 
     const formatAmount = (amountStr: string | undefined) => {
         if (!showSalary || !amountStr) return '******';
-        return amountStr;
-    }
-
-    if (viewMode === 'selection') {
-         return (
-            <div className="w-full bg-white min-h-screen flex flex-col">
-                <Header title="选择月份" onBack={handleBack} />
-                <main className="flex-grow flex">
-                    <div className="w-1/3 bg-slate-100/70 border-r border-slate-200">
-                        <ul>
-                            {availablePayslipYears.map((year) => (
-                                <li
-                                    key={year}
-                                    onClick={() => setActiveYearInSelector(year)}
-                                    className={`p-4 text-center text-base cursor-pointer ${
-                                        activeYearInSelector === year 
-                                        ? 'bg-white font-semibold text-slate-900' 
-                                        : 'text-slate-600 hover:bg-slate-200/50'
-                                    }`}
-                                    role="button"
-                                    aria-selected={activeYearInSelector === year}
-                                >
-                                    {year}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="w-2/3">
-                        <ul className="divide-y divide-slate-100">
-                            {(availablePayslipYearsData[activeYearInSelector] || []).map((month) => (
-                                <li 
-                                    key={month} 
-                                    onClick={() => handleMonthSelect(month)} 
-                                    className="p-5 flex justify-between items-center cursor-pointer hover:bg-slate-50"
-                                    role="button"
-                                    aria-label={`Select month ${month}`}
-                                >
-                                    <span className={`text-base ${month === selectedMonth ? 'text-[#5Fc38f] font-semibold' : 'text-slate-800'}`}>{month.substring(5, 7)}月</span>
-                                    {month === selectedMonth && <CheckIcon className="w-6 h-6 text-[#5Fc38f]" />}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </main>
-            </div>
-        );
+        const number = parseFloat(amountStr.replace(/,/g, ''));
+        if (isNaN(number)) return '******';
+        return `¥ ${number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
 
     const payslipData = payslipDataByMonth[selectedMonth];
 
     return (
         <div className="w-full bg-slate-100 min-h-screen">
-            <Header title="工资单" onBack={handleBack} />
-            
-            <main className="flex-grow p-5 pb-8 space-y-5">
-                 <div className="bg-white p-6 rounded-xl shadow-sm">
-                    <div className="flex items-center">
-                        <div className="w-12 h-12 bg-green-100 text-green-600 font-bold text-xl rounded-full flex items-center justify-center mr-4">
-                            {payslipData.employeeName.charAt(0)}
-                        </div>
+            <Header title="工资单" onBack={onBack} />
+            <main className="p-4">
+                <div className="bg-white rounded-xl shadow-sm">
+                    {/* Header Section */}
+                    <div className="flex justify-between items-center p-6">
                         <div>
-                            <h2 className="font-bold text-2xl text-slate-900">{payslipData.employeeName}</h2>
-                            <p className="text-base text-slate-500 mt-1">{payslipData.jobTitle}</p>
+                            <h2 className="text-xl font-bold text-slate-900">{payslipData.employeeName}</h2>
+                            <p className="text-sm text-slate-500 mt-1">{payslipData.jobTitle} &bull; {payslipData.department}</p>
                         </div>
-                    </div>
-                    <div className="border-t border-slate-100 my-5"></div>
-                    <div className="text-base space-y-4">
-                        <div className="flex justify-between items-center">
-                            <span className="text-slate-500">部门名称</span>
-                            <span className="text-slate-900 font-semibold">{payslipData.department}</span>
-                        </div>
-                         <div className="flex justify-between items-center">
-                            <span className="text-slate-500">发放主体</span>
-                            <span className="text-slate-900 font-semibold text-right">{payslipData.payingEntity}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-[#5Fc38f] text-white p-6 rounded-xl shadow-lg">
-                    <div className="flex justify-between items-center">
-                        <span className="text-base text-green-200">实发工资 (元)</span>
-                        <button onClick={() => {
-                            setActiveYearInSelector(selectedMonth.substring(0, 4));
-                            setViewMode('selection')
-                        }} className="flex items-center text-sm text-green-200 hover:text-white transition-colors p-1 -m-1 rounded">
+                        <button 
+                            onClick={() => {
+                                setActiveYearInSelector(selectedMonth.substring(0, 4));
+                                setIsMonthSelectorOpen(true)
+                            }} 
+                            className="flex-shrink-0 flex items-center text-base font-semibold text-[#5fc38f] bg-green-100/60 hover:bg-green-100 transition-colors px-4 py-2 rounded-full"
+                        >
                             <span>{payslipData.date}</span>
-                            <ChevronRightIcon className="!text-green-200 ml-1" />
+                            <ChevronRightIcon className="!w-5 !h-5 ml-1 text-[#5fc38f]" />
                         </button>
                     </div>
-                    <div className="flex justify-between items-center my-3">
-                        <p className="text-5xl font-extrabold tracking-tight">
-                            {formatAmount(payslipData.actualPayout)}
-                        </p>
-                        <button onClick={() => setShowSalary(!showSalary)} className="text-green-200 hover:text-white">
-                           {showSalary ? <EyeIcon className="w-6 h-6"/> : <EyeOffIcon className="w-6 h-6"/>}
-                        </button>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 text-base mt-6">
-                        <div>
-                            <p className="text-green-200">应发工资</p>
-                            <p className="font-semibold mt-1 text-lg">{formatAmount(payslipData.grossPay.amount)}</p>
-                        </div>
-                        <div className="text-right">
-                            <p className="text-green-200">扣除总计</p>
-                            <p className="font-semibold mt-1 text-lg">{formatAmount(payslipData.deductions.amount)}</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div className="bg-white rounded-xl shadow-sm">
-                    <div className="flex justify-between items-center px-5 py-4">
-                        <h3 className="font-bold text-[#5Fc38f] text-base">{payslipData.grossPay.title}</h3>
-                        <span className="font-bold text-base text-slate-800">{formatAmount(payslipData.grossPay.amount)}</span>
-                    </div>
-                    <div className="px-5 pb-1">
-                        {payslipData.grossPay.items.map((item, index) => (
-                            <div key={index} className="flex justify-between items-center py-4 border-t border-slate-100">
-                                <span className="text-slate-600 text-base">{item.label}</span>
-                                <span className="text-slate-800 text-base font-semibold">{formatAmount(item.value)}</span>
+                    <div className="border-t border-slate-100"></div>
+                    
+                    {/* Net Pay Summary */}
+                    <div className="p-6">
+                        <div className="text-center">
+                            <div className="flex justify-center items-center">
+                                <span className="text-base text-slate-600">实发工资 (元)</span>
+                                <button onClick={() => setShowSalary(!showSalary)} className="p-1 text-[#5fc38f] hover:text-green-700 rounded-full transition-colors ml-2">
+                                    {showSalary ? <EyeIcon className="w-5 h-5"/> : <EyeOffIcon className="w-5 h-5"/>}
+                                </button>
                             </div>
-                        ))}
+                            <p className="text-4xl font-bold text-slate-800 tracking-tight my-2">
+                                {formatAmount(payslipData.actualPayout)}
+                            </p>
+                        </div>
+                        <div className="mt-6 grid grid-cols-3 items-center text-center">
+                            <div className="text-center">
+                                <p className="text-slate-500 text-sm">应发合计</p>
+                                <p className="font-semibold mt-1 text-lg text-slate-800">{formatAmount(payslipData.grossPay.amount)}</p>
+                            </div>
+                            <div className="flex justify-center">
+                                <div className="w-px h-10 bg-slate-200"></div>
+                            </div>
+                            <div className="text-center">
+                                <p className="text-slate-500 text-sm">扣除合计</p>
+                                <p className="font-semibold mt-1 text-lg text-slate-800">{formatAmount(payslipData.deductions.amount)}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <div className="bg-white rounded-xl shadow-sm">
-                    <div className="flex justify-between items-center px-5 py-4">
-                        <h3 className="font-bold text-slate-800 text-base">{payslipData.deductions.title}</h3>
-                        <span className="font-bold text-base text-slate-800">{formatAmount(payslipData.deductions.amount)}</span>
-                    </div>
-                    <div className="px-5 pb-1">
-                        {payslipData.deductions.items.map((item, index) => (
-                             <div key={index} className="flex justify-between items-center py-4 border-t border-slate-100">
-                                <span className="text-slate-600 text-base">{item.label}</span>
-                                <div className="grid grid-cols-[1fr_auto] items-center gap-2">
-                                    <span className="text-slate-800 text-base font-semibold text-right">{formatAmount(item.value)}</span>
-                                    <div className="w-5 h-5">
-                                        {item.hasInfo && <InfoIcon />}
-                                    </div>
+
+                    <div className="border-t border-slate-100"></div>
+
+                    {/* Detailed Breakdown */}
+                    <div className="p-6">
+                        {/* Gross Pay Section */}
+                        <div>
+                             <div className="flex justify-between items-center py-2 border-b border-slate-100 mb-2">
+                                <h3 className="font-bold text-lg text-slate-800">应发项目</h3>
+                            </div>
+                            <div className="divide-y divide-slate-100">
+                                {payslipData.grossPay.items.map((item, index) => (
+                                    <BreakdownRow key={`gross-${index}`} label={item.label} value={formatAmount(item.value)} />
+                                ))}
+                                <div className="flex justify-between items-center py-3 border-t-2 border-slate-100 mt-2 pt-3">
+                                    <span className="text-base font-bold text-slate-800">应发合计</span>
+                                    <span className="font-mono font-bold text-slate-900 text-base text-right">{formatAmount(payslipData.grossPay.amount)}</span>
                                 </div>
                             </div>
-                        ))}
+                        </div>
+
+                        {/* Deductions Section */}
+                        <div className="mt-8">
+                             <div className="flex justify-between items-center py-2 border-b border-slate-100 mb-2">
+                                <h3 className="font-bold text-lg text-slate-800">扣除项目</h3>
+                            </div>
+                            <div className="divide-y divide-slate-100">
+                                {payslipData.deductions.items.map((item, index) => (
+                                    <BreakdownRow key={`deduction-${index}`} label={item.label} value={formatAmount(item.value)} />
+                                ))}
+                                 <div className="flex justify-between items-center py-3 border-t-2 border-slate-100 mt-2 pt-3">
+                                    <span className="text-base font-bold text-slate-800">扣除合计</span>
+                                    <span className="font-mono font-bold text-slate-900 text-base text-right">{formatAmount(payslipData.deductions.amount)}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                {/* Issuing Info Footer */}
+                <div className="mt-8 mb-4 text-center text-slate-500">
+                    <p className="font-semibold text-slate-700 text-base">{payslipData.payingEntity}</p>
+                    <p className="text-sm mt-1">发放于 {payslipData.date}</p>
+                </div>
             </main>
+            <Modal isOpen={isMonthSelectorOpen} onClose={() => setIsMonthSelectorOpen(false)}>
+                <div className="flex flex-col h-[60vh]">
+                     <div className="p-5 flex justify-between items-center border-b border-slate-200 flex-shrink-0">
+                        <h2 className="text-lg font-bold text-slate-900">选择月份</h2>
+                        <button onClick={() => setIsMonthSelectorOpen(false)} className="p-2 -mr-2 text-slate-500 hover:text-slate-800">
+                            <XMarkIcon className="w-6 h-6" />
+                        </button>
+                    </div>
+                    <div className="flex-grow flex overflow-hidden">
+                        <div className="w-1/3 bg-slate-100/70 border-r border-slate-200 overflow-y-auto">
+                            <ul>
+                                {availablePayslipYears.map((year) => (
+                                    <li
+                                        key={year}
+                                        onClick={() => setActiveYearInSelector(year)}
+                                        className={`p-4 text-center text-base cursor-pointer ${
+                                            activeYearInSelector === year 
+                                            ? 'bg-white font-semibold text-slate-900' 
+                                            : 'text-slate-600 hover:bg-slate-200/50'
+                                        }`}
+                                        role="button"
+                                        aria-selected={activeYearInSelector === year}
+                                    >
+                                        {year}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="w-2/3 overflow-y-auto">
+                            <ul className="divide-y divide-slate-100">
+                                {(availablePayslipYearsData[activeYearInSelector] || []).map((month) => (
+                                    <li 
+                                        key={month} 
+                                        onClick={() => handleMonthSelect(month)} 
+                                        className="p-5 flex justify-between items-center cursor-pointer hover:bg-slate-50"
+                                        role="button"
+                                        aria-label={`Select month ${month}`}
+                                    >
+                                        <span className={`text-base ${month === selectedMonth ? 'text-[#5Fc38f] font-semibold' : 'text-slate-800'}`}>{month.substring(5, 7)}月</span>
+                                        {month === selectedMonth && <CheckIcon className="w-6 h-6 text-[#5Fc38f]" />}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 };

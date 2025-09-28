@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { insuranceDataByMonth, availableInsuranceMonths, availableInsuranceYears, availableInsuranceYearsData } from './mockdata';
 import { Header } from './Header';
-import { ShieldCheckIcon, BriefcaseIcon, UsersIcon, HomeIcon, HeartIcon, CheckIcon, ChevronRightIcon } from './icons';
+import { Modal } from './Modal';
+import { 
+    ShieldCheckIcon, 
+    BriefcaseIcon, 
+    UsersIcon, 
+    HomeIcon, 
+    HeartIcon, 
+    CheckIcon, 
+    ChevronRightIcon,
+    XMarkIcon 
+} from './icons';
 
 const getIconForType = (type: string) => {
     const iconProps = { className: "w-5 h-5" };
@@ -23,8 +33,6 @@ const getIconForType = (type: string) => {
     }
 };
 
-// FIX: Define props with an interface and use React.FC to correctly type the component,
-// which resolves issues with special props like 'key'.
 interface ContributionItemProps {
     type: string;
     company: string;
@@ -60,71 +68,16 @@ const ContributionItem: React.FC<ContributionItemProps> = ({ type, company, pers
     );
 };
 
-type ViewMode = 'details' | 'selection';
-
 export const InsurancePage = ({ onBack }: { onBack: () => void }) => {
-    const [viewMode, setViewMode] = useState<ViewMode>('details');
+    const [isMonthSelectorOpen, setIsMonthSelectorOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(availableInsuranceMonths[0]);
     const [activeYearInSelector, setActiveYearInSelector] = useState(availableInsuranceMonths[0].substring(0, 4));
 
     const handleMonthSelect = (month: string) => {
         setSelectedMonth(month);
-        setViewMode('details');
+        setIsMonthSelectorOpen(false);
     };
     
-    const handleBack = () => {
-        if (viewMode === 'selection') {
-            setViewMode('details');
-        } else {
-            onBack();
-        }
-    };
-
-    if (viewMode === 'selection') {
-         return (
-            <div className="w-full bg-white min-h-screen flex flex-col">
-                <Header title="选择月份" onBack={handleBack} />
-                <main className="flex-grow flex">
-                    <div className="w-1/3 bg-slate-100/70 border-r border-slate-200">
-                        <ul>
-                            {availableInsuranceYears.map((year) => (
-                                <li
-                                    key={year}
-                                    onClick={() => setActiveYearInSelector(year)}
-                                    className={`p-4 text-center text-base cursor-pointer ${
-                                        activeYearInSelector === year 
-                                        ? 'bg-white font-semibold text-slate-900' 
-                                        : 'text-slate-600 hover:bg-slate-200/50'
-                                    }`}
-                                    role="button"
-                                    aria-selected={activeYearInSelector === year}
-                                >
-                                    {year}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="w-2/3">
-                        <ul className="divide-y divide-slate-100">
-                            {(availableInsuranceYearsData[activeYearInSelector] || []).map((month) => (
-                                <li 
-                                    key={month} 
-                                    onClick={() => handleMonthSelect(month)} 
-                                    className="p-5 flex justify-between items-center cursor-pointer hover:bg-slate-50"
-                                    role="button"
-                                    aria-label={`Select month ${month}`}
-                                >
-                                    <span className={`text-base ${month === selectedMonth ? 'text-[#5Fc38f] font-semibold' : 'text-slate-800'}`}>{month.substring(5, 7)}月</span>
-                                    {month === selectedMonth && <CheckIcon className="w-6 h-6 text-[#5Fc38f]" />}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </main>
-            </div>
-        );
-    }
-
     const insuranceData = insuranceDataByMonth[selectedMonth];
     const totals = insuranceData.contributions.details.reduce(
         (acc: { company: number; personal: number; }, item: { company: string; personal: string; }) => {
@@ -136,43 +89,54 @@ export const InsurancePage = ({ onBack }: { onBack: () => void }) => {
     );
 
     const formatNumber = (num: number) => num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const totalContribution = totals.company + totals.personal;
 
     return (
         <div className="w-full bg-slate-100 min-h-screen">
-            <Header title="五险一金" onBack={handleBack} />
-            <main className="p-5 space-y-5">
-                <div className="bg-[#5Fc38f] text-white p-6 rounded-xl shadow-lg">
-                    <div className="flex justify-between items-start">
-                        <span className="text-base text-green-200">缴费总计 (元)</span>
-                         <button onClick={() => { 
-                             setActiveYearInSelector(selectedMonth.substring(0, 4));
-                             setViewMode('selection') 
-                         }} className="flex items-center text-sm text-green-200 hover:text-white transition-colors p-1 -m-1 rounded">
+            <Header title="五险一金" onBack={onBack} />
+            <main className="p-4">
+                <div className="bg-white rounded-xl shadow-sm">
+                    {/* Header Section */}
+                    <div className="flex justify-between items-center p-6">
+                        <h2 className="text-xl font-bold text-slate-900">{insuranceData.contributions.title}</h2>
+                        <button 
+                            onClick={() => {
+                                setActiveYearInSelector(selectedMonth.substring(0, 4));
+                                setIsMonthSelectorOpen(true)
+                            }} 
+                            className="flex-shrink-0 flex items-center text-base font-semibold text-[#5fc38f] bg-green-100/60 hover:bg-green-100 transition-colors px-4 py-2 rounded-full"
+                        >
                             <span>缴纳月份: {insuranceData.period}</span>
-                            <ChevronRightIcon className="!text-green-200 ml-1" />
+                            <ChevronRightIcon className="!w-5 !h-5 ml-1 text-[#5fc38f]" />
                         </button>
                     </div>
-                    <p className="text-5xl font-extrabold tracking-tight my-3">
-                        {formatNumber(totals.company + totals.personal)}
-                    </p>
-                    <div className="grid grid-cols-2 gap-4 text-base mt-6">
-                        <div>
-                            <p className="text-green-200">企业缴纳合计</p>
-                            <p className="font-semibold mt-1 text-lg">{formatNumber(totals.company)}</p>
-                        </div>
-                        <div className="text-right">
-                            <p className="text-green-200">个人缴纳合计</p>
-                            <p className="font-semibold mt-1 text-lg">{formatNumber(totals.personal)}</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                     <div className="p-5 border-b border-slate-100">
-                        <h2 className="text-xl font-bold text-slate-900">{insuranceData.contributions.title}</h2>
+                    <div className="border-t border-slate-100"></div>
+
+                    {/* Summary Section */}
+                    <div className="p-6 text-center">
+                        <span className="text-base text-slate-600">缴费总计 (元)</span>
+                        <p className="text-4xl font-bold text-slate-800 tracking-tight my-2">{formatNumber(totalContribution)}</p>
+                        <div className="mt-6 grid grid-cols-3 items-center text-center">
+                             <div className="text-center">
+                                <p className="text-slate-500 text-sm">企业缴纳合计</p>
+                                <p className="font-semibold mt-1 text-lg text-slate-800">{formatNumber(totals.company)}</p>
+                            </div>
+                            <div className="flex justify-center">
+                                <div className="w-px h-10 bg-slate-200"></div>
+                            </div>
+                            <div className="text-center">
+                                <p className="text-slate-500 text-sm">个人缴纳合计</p>
+                                <p className="font-semibold mt-1 text-lg text-slate-800">{formatNumber(totals.personal)}</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <div className="border-t border-slate-100"></div>
+                    
+                    {/* Detailed Breakdown */}
                     <div className="px-5 divide-y divide-slate-100">
-                        {insuranceData.contributions.details.map((item: { type: string; company: string; personal: string; }, index: React.Key | null | undefined) => (
+                        {insuranceData.contributions.details.map((item, index) => (
                             <ContributionItem
                                 key={index}
                                 type={item.type}
@@ -183,6 +147,53 @@ export const InsurancePage = ({ onBack }: { onBack: () => void }) => {
                     </div>
                 </div>
             </main>
+            <Modal isOpen={isMonthSelectorOpen} onClose={() => setIsMonthSelectorOpen(false)}>
+                <div className="flex flex-col h-[60vh]">
+                     <div className="p-5 flex justify-between items-center border-b border-slate-200 flex-shrink-0">
+                        <h2 className="text-lg font-bold text-slate-900">选择月份</h2>
+                        <button onClick={() => setIsMonthSelectorOpen(false)} className="p-2 -mr-2 text-slate-500 hover:text-slate-800">
+                            <XMarkIcon className="w-6 h-6" />
+                        </button>
+                    </div>
+                    <div className="flex-grow flex overflow-hidden">
+                        <div className="w-1/3 bg-slate-100/70 border-r border-slate-200 overflow-y-auto">
+                            <ul>
+                                {availableInsuranceYears.map((year) => (
+                                    <li
+                                        key={year}
+                                        onClick={() => setActiveYearInSelector(year)}
+                                        className={`p-4 text-center text-base cursor-pointer ${
+                                            activeYearInSelector === year 
+                                            ? 'bg-white font-semibold text-slate-900' 
+                                            : 'text-slate-600 hover:bg-slate-200/50'
+                                        }`}
+                                        role="button"
+                                        aria-selected={activeYearInSelector === year}
+                                    >
+                                        {year}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="w-2/3 overflow-y-auto">
+                            <ul className="divide-y divide-slate-100">
+                                {(availableInsuranceYearsData[activeYearInSelector] || []).map((month) => (
+                                    <li 
+                                        key={month} 
+                                        onClick={() => handleMonthSelect(month)} 
+                                        className="p-5 flex justify-between items-center cursor-pointer hover:bg-slate-50"
+                                        role="button"
+                                        aria-label={`Select month ${month}`}
+                                    >
+                                        <span className={`text-base ${month === selectedMonth ? 'text-[#5Fc38f] font-semibold' : 'text-slate-800'}`}>{month.substring(5, 7)}月</span>
+                                        {month === selectedMonth && <CheckIcon className="w-6 h-6 text-[#5Fc38f]" />}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 };
