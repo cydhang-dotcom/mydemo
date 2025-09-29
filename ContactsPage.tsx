@@ -3,8 +3,6 @@ import { featuredContacts, departments, colleagues } from './mockdata';
 import { ChevronRightIcon, SearchIcon, UsersIcon } from './icons';
 import type { Colleague, Department } from './types';
 
-// FIX: Define props with an interface and use React.FC to correctly type the component,
-// which resolves issues with special props like 'key'.
 interface FeaturedContactCardProps {
     contact: Colleague;
     onViewDetails: () => void;
@@ -26,8 +24,6 @@ const FeaturedContactCard: React.FC<FeaturedContactCardProps> = ({ contact, onVi
     </div>
 );
 
-// FIX: Define props with an interface and use React.FC to correctly type the component,
-// which resolves issues with special props like 'key'.
 interface DepartmentListItemProps {
     department: Department;
     onViewDetails: () => void;
@@ -78,24 +74,29 @@ export const ContactsPage = ({ navigateTo }: { navigateTo: (page: string, params
             <ContactsHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             
             <main className="flex-grow p-4 pb-24 space-y-4">
-                {searchTerm === '' && (
-                    <div className="bg-white rounded-xl shadow-sm p-5">
-                         <h3 className="font-bold text-slate-900 mb-2 text-base">专属服务顾问</h3>
-                         <p className="text-sm text-slate-500 mb-4">您的人事与税务专家</p>
-                        <div className="space-y-2">
-                            {featuredContacts.map(contact => (
-                                <FeaturedContactCard key={contact.id} contact={contact} onViewDetails={() => navigateTo('contact-details', { contactId: contact.id })} />
+                <div className="bg-white rounded-xl shadow-sm">
+                    {searchTerm === '' && (
+                        <>
+                            <div className="p-5">
+                                <h3 className="font-bold text-slate-900 mb-2 text-base">专属服务顾问</h3>
+                                <p className="text-sm text-slate-500 mb-4">您的人事与税务专家</p>
+                                <div className="space-y-2">
+                                    {featuredContacts.map(contact => (
+                                        <FeaturedContactCard key={contact.id} contact={contact} onViewDetails={() => navigateTo('contact-details', { contactId: contact.id })} />
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="border-t border-slate-100"></div>
+                        </>
+                    )}
+                    
+                    <div>
+                        {searchTerm === '' && <h3 className="font-bold text-slate-900 text-base p-5 pb-2">组织架构</h3>}
+                        <div className="divide-y divide-slate-100">
+                            {filteredDepartments.map(dept => (
+                                <DepartmentListItem key={dept.id} department={dept} onViewDetails={() => navigateTo('department-details', { departmentId: dept.id })} />
                             ))}
                         </div>
-                    </div>
-                )}
-                
-                <div className="bg-white rounded-xl shadow-sm">
-                    {searchTerm === '' && <h3 className="font-bold text-slate-900 text-base p-5 pb-2">组织架构</h3>}
-                    <div className="divide-y divide-slate-100">
-                        {filteredDepartments.map(dept => (
-                            <DepartmentListItem key={dept.id} department={dept} onViewDetails={() => navigateTo('department-details', { departmentId: dept.id })} />
-                        ))}
                     </div>
                 </div>
             </main>
