@@ -61,8 +61,12 @@ export const PayslipPage = ({ onBack }: { onBack: () => void }) => {
                         <div className="text-center">
                             <div className="flex justify-center items-center">
                                 <span className="text-base text-slate-600">实发工资 (元)</span>
-                                <button onClick={() => setShowSalary(!showSalary)} className="p-1 text-[#5fc38f] hover:text-green-700 rounded-full transition-colors ml-2">
-                                    {showSalary ? <EyeIcon className="w-5 h-5"/> : <EyeOffIcon className="w-5 h-5"/>}
+                                <button
+                                    onClick={() => setShowSalary(!showSalary)}
+                                    className="p-2 bg-green-100/60 text-green-700 hover:bg-green-100 rounded-full transition-colors ml-3"
+                                    aria-label={showSalary ? '隐藏金额' : '显示金额'}
+                                >
+                                    {showSalary ? <EyeIcon className="w-7 h-7" /> : <EyeOffIcon className="w-7 h-7" />}
                                 </button>
                             </div>
                             <p className="text-4xl font-bold text-slate-800 tracking-tight my-2">
