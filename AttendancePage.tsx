@@ -24,18 +24,6 @@ interface AnomalyDetails {
     items: AnomalyItem[];
 }
 
-const BreakdownRow: React.FC<{ date: string, description: string }> = ({ date, description }) => (
-    <div className="flex justify-between items-center py-3">
-        <div>
-            <p className="font-semibold text-sm text-slate-800">{date}</p>
-            <p className="text-xs text-slate-500 mt-1">{description}</p>
-        </div>
-        <button className="flex-shrink-0 px-3 py-1 text-xs font-semibold text-[#5fc38f] border border-[#5fc38f] rounded-full hover:bg-[#5fc38f]/10 transition-colors">
-            处理
-        </button>
-    </div>
-);
-
 const SummaryItem: React.FC<{ label: string, value: string | number, unit: string }> = ({ label, value, unit }) => (
     <div className="text-center">
         <p className="text-slate-500 text-sm">{label}</p>
@@ -107,14 +95,31 @@ export const AttendancePage = ({ onBack }: { onBack: () => void }) => {
                     <div className="p-6">
                         <h3 className="font-bold text-lg text-slate-800 pb-2 border-b border-slate-100 mb-2">出勤异常</h3>
                         {anomalies.length > 0 ? (
-                            <div className="space-y-4">
+                            <div className="space-y-8 pt-4">
                                 {anomalies.map(([type, details]) => (
                                     <div key={type}>
-                                        <h4 className="font-semibold text-base text-slate-700 mb-1">{type} ({details.count}次)</h4>
-                                        <div className="divide-y divide-slate-100 pl-2 border-l-2 border-slate-100">
-                                            {details.items.map((item, index: number) => (
-                                                <BreakdownRow key={index} date={item.date} description={item.description} />
-                                            ))}
+                                        <h4 className="font-semibold text-base text-slate-700 mb-3">{type} ({details.count}次)</h4>
+                                        <div className="relative">
+                                            {/* Vertical timeline bar */}
+                                            <div className="absolute left-2.5 top-1 bottom-1 w-0.5 bg-slate-200" aria-hidden="true"></div>
+                                            <div className="space-y-6">
+                                                {details.items.map((item, index: number) => (
+                                                    <div key={index} className="flex items-start relative">
+                                                        <div className="flex-shrink-0 w-6 h-6 bg-slate-400 rounded-full border-4 border-white flex items-center justify-center z-10"></div>
+                                                        <div className="flex-1 ml-4">
+                                                            <div className="flex justify-between items-center">
+                                                                <div>
+                                                                    <p className="font-semibold text-sm text-slate-800">{item.date}</p>
+                                                                    <p className="text-xs text-slate-500 mt-1">{item.description}</p>
+                                                                </div>
+                                                                <button className="flex-shrink-0 px-3 py-1 text-xs font-semibold text-[#5fc38f] border border-[#5fc38f] rounded-full hover:bg-[#5fc38f]/10 transition-colors">
+                                                                    处理
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
