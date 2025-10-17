@@ -147,7 +147,7 @@ export const ServiceDetailsPage = ({ onBack, serviceId }: { onBack: () => void; 
                     <div className="border-t border-slate-100"></div>
 
                     <div className="p-6">
-                        <h3 className="text-lg font-bold text-slate-800 mb-6">服务时间轴</h3>
+                        <h3 className="text-lg font-bold text-slate-800 mb-6">服务进度</h3>
                         {service.timeline && service.timeline.length > 0 ? (
                             service.timeline.map((item, index) => (
                                 <TimelineItem 
