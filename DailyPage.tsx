@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// FIX: Import UserCircleIcon to resolve reference error.
 import {
     ChevronRightIcon,
     LocationPinIcon,
@@ -6,11 +7,11 @@ import {
     CalendarIcon,
     DocumentTextIcon,
     UsersIcon,
-    UserCircleIcon,
     DocumentMagnifyingGlassIcon,
     ClipboardDocumentCheckIcon,
     BuildingOfficeIcon,
     ChevronDownIcon,
+    UserCircleIcon,
 } from './icons';
 
 // A standardized header for main pages, showing the company selector.
@@ -106,7 +107,7 @@ const TodoSection = () => {
                     <h3 className="font-bold text-slate-900 text-base">待办</h3>
                     <span className="ml-2 bg-orange-100 text-orange-600 text-xs font-bold px-2 py-0.5 rounded-full">3</span>
                 </div>
-                <button className="flex items-center text-sm text-slate-400 hover:text-[#5fc38f]">
+                <button className="flex items-center text-sm text-slate-400 hover:text-[#5Fc38f]">
                     <span>查看审批</span>
                     <ChevronRightIcon className="w-4 h-4 ml-0.5" />
                 </button>
@@ -129,25 +130,46 @@ const TodoSection = () => {
 };
 
 const HrServicesSection = () => {
-    const services = [
-        { name: '考勤日历', icon: <CalendarIcon /> },
-        { name: '考勤查询', icon: <DocumentMagnifyingGlassIcon /> },
-        { name: '请假公出', icon: <DocumentTextIcon /> },
-        { name: 'OA审批', icon: <ClipboardDocumentCheckIcon />, hasNotification: true },
-        { name: '员工服务', icon: <UsersIcon /> },
+    type ServiceCategory = 'attendance' | 'oa' | 'employee';
+
+    // FIX: Change icon type to JSX.Element to provide more specific type information 
+    // to React.cloneElement, resolving the prop type error.
+    interface Service {
+        name: string;
+        icon: JSX.Element;
+        category: ServiceCategory;
+        hasNotification?: boolean;
+    }
+
+    const services: Service[] = [
+        { name: '考勤日历', icon: <CalendarIcon />, category: 'attendance' },
+        { name: '考勤查询', icon: <DocumentMagnifyingGlassIcon />, category: 'attendance' },
+        { name: '请假公出', icon: <DocumentTextIcon />, category: 'attendance' },
+        { name: 'OA审批', icon: <ClipboardDocumentCheckIcon />, category: 'oa', hasNotification: true },
+        { name: '员工服务', icon: <UsersIcon />, category: 'employee' },
     ];
     
+    const categoryStyles: Record<ServiceCategory, string> = {
+        attendance: 'bg-blue-50 text-blue-500',
+        oa: 'bg-orange-50 text-orange-500',
+        employee: 'bg-emerald-50 text-emerald-500',
+    };
+
     return (
         <div className="bg-white rounded-xl shadow-sm p-5">
             <h3 className="font-bold text-slate-900 text-base mb-5">人事</h3>
-            <div className="grid grid-cols-4 gap-y-5 text-center">
+            <div className="grid grid-cols-4 gap-y-5">
                 {services.map(service => (
-                    <div key={service.name} className="cursor-pointer relative">
-                        <div className="w-14 h-14 bg-green-100/60 text-[#5fc38f] rounded-2xl flex items-center justify-center mx-auto mb-2">
-                            {React.cloneElement(service.icon, { className: 'w-7 h-7' })}
+                    <div key={service.name} className="cursor-pointer group flex flex-col items-center text-center">
+                        <div className="relative">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center group-hover:brightness-95 transition-all ${categoryStyles[service.category]}`}>
+                                {React.cloneElement(service.icon, { className: 'w-7 h-7' })}
+                            </div>
+                            {service.hasNotification && (
+                                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                            )}
                         </div>
-                        <p className="text-xs text-slate-600 font-medium">{service.name}</p>
-                        {service.hasNotification && <span className="absolute top-[-4px] right-[calc(50%-32px)] w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>}
+                        <p className="text-xs text-slate-600 font-medium mt-2">{service.name}</p>
                     </div>
                 ))}
             </div>
