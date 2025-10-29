@@ -55,7 +55,7 @@ export const WorkHistoryPage = ({ onBack }: { onBack: () => void }) => {
         <div className="w-full bg-slate-100 min-h-screen flex flex-col">
             <Header title="工作经历" onBack={onBack} />
             <main className="flex-grow p-4">
-                <div className="bg-white rounded-lg px-4 divide-y divide-slate-100">
+                <div className="bg-white rounded-xl shadow-sm px-4 divide-y divide-slate-100">
                     {workExperienceData.map(job => (
                         <div key={job.id} className="py-4">
                             <div className="flex justify-between items-center">

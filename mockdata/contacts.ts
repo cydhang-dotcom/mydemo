@@ -46,9 +46,11 @@ const rawColleagues: Omit<Colleague, 'avatarText'>[] = [
     { id: 'c14', name: '王五', position: '高级后端工程师', departmentId: 'd5', departmentName: '研发中心', phone: '13655556666', email: 'wangwu@example.com' },
     { id: 'c15', name: '赵六', position: '后端工程师', departmentId: 'd5', departmentName: '研发中心', phone: '13577778888', email: 'zhaoliu@example.com' },
     { id: 'c16', name: '孙七', position: '产品经理', departmentId: 'd5', departmentName: '研发中心', phone: '13499990000', email: 'sunqi@example.com' },
-    { id: 'c17', name: '周八', position: 'UI/UX设计师', departmentId: 'd5', departmentName: '研发中心', phone: '13312341234', email: 'zhouba@example.com' },
     // 管理中心 (d6)
     { id: 'c18', name: '刘管理', position: '总经理', departmentId: 'd6', departmentName: '管理中心', phone: '18585723739', email: 'liug@example.com' },
+    // 客户服务部 (d9)
+    { id: 'c19', name: '客服甲', position: '客服专员', departmentId: 'd9', departmentName: '客户服务部', phone: '18511112222', email: 'kefu1@example.com' },
+    { id: 'c20', name: '客服乙', position: '客服专员', departmentId: 'd9', departmentName: '客户服务部', phone: '18533334444', email: 'kefu2@example.com' },
 ];
 
 export const colleagues: Colleague[] = rawColleagues.map(c => ({
@@ -65,6 +67,7 @@ export const departments: Department[] = [
     { id: 'd6', name: '管理中心', memberCount: 0, parentId: null },
     { id: 'd7', name: '渠道部', memberCount: 0, parentId: null },
     { id: 'd8', name: '测试', memberCount: 0, parentId: null },
+    { id: 'd9', name: '客户服务部', memberCount: 0, parentId: null },
 ].map(dept => ({
     ...dept,
     memberCount: colleagues.filter(c => c.departmentId === dept.id).length

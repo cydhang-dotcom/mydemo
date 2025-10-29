@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import type { IconProps } from './icons';
 // FIX: Import UserCircleIcon to resolve reference error.
 import {
     ChevronRightIcon,
@@ -132,11 +133,12 @@ const TodoSection = () => {
 const HrServicesSection = () => {
     type ServiceCategory = 'attendance' | 'oa' | 'employee';
 
-    // FIX: Change icon type to JSX.Element to provide more specific type information 
-    // to React.cloneElement, resolving the prop type error.
+    // FIX: Use React.ReactElement for icon type to ensure it's a clonnable element
+    // and to resolve the "Cannot find namespace 'JSX'" error.
     interface Service {
         name: string;
-        icon: JSX.Element;
+        // FIX: Specify IconProps generic for React.ReactElement to allow passing className via cloneElement.
+        icon: React.ReactElement<IconProps>;
         category: ServiceCategory;
         hasNotification?: boolean;
     }

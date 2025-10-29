@@ -52,8 +52,8 @@ export const EmployeeInfoPage = ({ onBack, navigateTo }: { onBack: () => void; n
     return (
         <div className="w-full bg-slate-100 min-h-screen">
             <Header title="完善员工信息" onBack={onBack} />
-            <main className="pt-4">
-                <div className="bg-white">
+            <main className="p-4">
+                <div className="bg-white rounded-xl shadow-sm">
                     <div className="divide-y divide-slate-100">
                     {employeeInfoSections.map(item => (
                         <div key={item.id} onClick={() => handleItemClick(item)} className="flex justify-between items-center p-4 cursor-pointer hover:bg-slate-50">

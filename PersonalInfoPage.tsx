@@ -33,7 +33,7 @@ export const PersonalInfoPage = ({ onBack }: { onBack: () => void }) => {
          <div className="w-full bg-slate-100 min-h-screen flex flex-col">
             <Header title="个人信息" onBack={onBack} />
             <main className="flex-grow p-4">
-                <div className="bg-white rounded-lg px-4 divide-y divide-slate-100">
+                <div className="bg-white rounded-xl shadow-sm px-4 divide-y divide-slate-100">
                     <FormRow label="籍贯" value={data.nativePlace} />
                     <FormRow label="是否是退伍军人" value={data.isVeteran} type="select" />
                     <FormRow label="婚姻状况" value={data.maritalStatus} type="select" />

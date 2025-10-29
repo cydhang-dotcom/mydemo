@@ -50,3 +50,9 @@ export const LocationPinIcon: React.FC<IconProps> = ({ className = "w-6 h-6" }) 
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
     </svg>
 );
+
+export const DiamondIcon: React.FC<IconProps> = ({ className = "w-4 h-4" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10 1.618a.75.75 0 01.53.22l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 01-1.06 0L4.22 8.148a.75.75 0 010-1.06l5.25-5.25a.75.75 0 01.53-.22z" />
+    </svg>
+);

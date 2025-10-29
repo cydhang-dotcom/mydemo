@@ -4,23 +4,27 @@ import { colleagues, departments } from './mockdata';
 import type { Colleague } from './types';
 import { ChevronRightIcon } from './icons';
 
-// FIX: Define props with an interface and use React.FC to correctly type the component,
-// which resolves issues with special props like 'key'.
 interface ColleagueListItemProps {
     colleague: Colleague;
     onViewDetails: () => void;
 }
 
 const ColleagueListItem: React.FC<ColleagueListItemProps> = ({ colleague, onViewDetails }) => (
-    <div onClick={onViewDetails} className="flex items-center px-4 py-3 cursor-pointer hover:bg-slate-50">
-        <div className="w-12 h-12 bg-blue-100 text-blue-600 font-bold text-lg rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+    <div onClick={onViewDetails} className="flex items-center px-5 py-4 cursor-pointer hover:bg-slate-50">
+        <div className="w-12 h-12 bg-green-100 text-[#5fc38f] font-bold text-lg rounded-full flex items-center justify-center mr-4 flex-shrink-0">
             {colleague.avatarText}
         </div>
         <div className="flex-grow">
-            <p className="font-bold text-slate-900">{colleague.name}</p>
+            <p className="font-semibold text-slate-900 text-base">{colleague.name}</p>
             <p className="text-sm text-slate-500 mt-1">{colleague.position}</p>
         </div>
         <ChevronRightIcon className="w-5 h-5 text-slate-400" />
+    </div>
+);
+
+const SectionHeader = ({ title }: { title: string }) => (
+    <div className="px-5 py-2 bg-slate-50/70 border-b border-slate-100">
+        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{title}</h3>
     </div>
 );
 
@@ -52,22 +56,18 @@ export const DepartmentDetailPage = ({ onBack, navigateTo, departmentId }: { onB
             <main className="flex-grow p-4">
                 <div className="bg-white rounded-xl shadow-sm overflow-hidden">
                     {departmentHead && (
-                        <>
-                            <div className="px-4 pt-4 pb-1">
-                                <h3 className="text-sm font-semibold text-slate-500">部门主管</h3>
-                            </div>
+                        <section>
+                            <SectionHeader title="部门主管" />
                             <ColleagueListItem 
                                 colleague={departmentHead} 
                                 onViewDetails={() => navigateTo('contact-details', { contactId: departmentHead.id })} 
                             />
-                        </>
+                        </section>
                     )}
 
                     {regularMembers.length > 0 && (
-                        <>
-                            <div className={`px-4 pt-4 pb-1 ${departmentHead ? 'border-t border-slate-100' : ''}`}>
-                                <h3 className="text-sm font-semibold text-slate-500">部门成员</h3>
-                            </div>
+                        <section>
+                            <SectionHeader title="部门成员" />
                             <div className="divide-y divide-slate-100">
                                 {regularMembers.map(member => (
                                     <ColleagueListItem 
@@ -77,7 +77,7 @@ export const DepartmentDetailPage = ({ onBack, navigateTo, departmentId }: { onB
                                     />
                                 ))}
                             </div>
-                        </>
+                        </section>
                     )}
 
                     {members.length === 0 && (

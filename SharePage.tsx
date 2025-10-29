@@ -12,8 +12,8 @@ export const SharePage = ({ onBack }: { onBack: () => void }) => {
     return (
         <div className="w-full bg-slate-100 min-h-screen">
             <Header title="分享班步" onBack={onBack} />
-            <main className="pt-4">
-                <div className="bg-white">
+            <main className="p-4 space-y-4">
+                <div className="bg-white rounded-xl shadow-sm">
                     <div className="divide-y divide-slate-100">
                         {shareOptions.map(option => (
                             <div key={option.id} className="flex justify-between items-center p-4 cursor-pointer hover:bg-slate-50">
@@ -27,11 +27,10 @@ export const SharePage = ({ onBack }: { onBack: () => void }) => {
                     </div>
                 </div>
 
-                <div className="px-4 pt-6 pb-2">
-                    <h3 className="text-slate-500 font-medium text-sm">分享记录</h3>
-                </div>
-
-                <div className="bg-white">
+                <div className="bg-white rounded-xl shadow-sm">
+                    <div className="p-4 border-b border-slate-100">
+                        <h3 className="text-slate-800 font-semibold text-base">分享记录</h3>
+                    </div>
                     <div className="divide-y divide-slate-100">
                         {shareHistoryData.map(record => (
                             <div key={record.id} className="flex justify-between items-center p-4">
