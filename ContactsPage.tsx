@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { featuredContacts, departments, colleagues } from './mockdata';
+import { featuredContacts, departments, colleagues, companies } from './mockdata';
 import { 
     ChevronRightIcon, 
     SearchIcon, 
@@ -9,12 +9,12 @@ import {
     BullseyeIcon,
     DiamondIcon,
     UserCircleIcon,
-    MinusIcon
+    MinusIcon,
+    ChevronDownIcon,
+    ChevronUpIcon
 } from './icons';
-import type { Colleague, Department } from './types';
+import type { Colleague, Department, Company } from './types';
 
-// FIX: Define props with an interface and use React.FC to correctly type the component,
-// which resolves issues with special props like 'key'.
 interface FeaturedContactItemProps {
     contact: Colleague;
     navigateTo: (page: string, params: any) => void;
@@ -28,10 +28,12 @@ const FeaturedContactItem: React.FC<FeaturedContactItemProps> = ({ contact, navi
         <div className="flex-grow">
             <div className="flex items-center flex-wrap">
                 <p className="font-semibold text-slate-900 mr-2">{contact.name}</p>
-                <div className="flex items-center bg-slate-700 text-white text-[11px] font-semibold rounded px-1.5 py-0.5 shadow-sm">
-                    <DiamondIcon className="w-3 h-3 mr-1" />
-                    <span>{contact.specialty}</span>
-                </div>
+                {contact.specialty &&
+                    <div className="flex items-center bg-slate-700 text-white text-[11px] font-semibold rounded px-1.5 py-0.5 shadow-sm">
+                        <DiamondIcon className="w-3 h-3 mr-1" />
+                        <span>{contact.specialty}</span>
+                    </div>
+                }
             </div>
             <p className="text-sm text-slate-500 mt-1">{contact.position}</p>
         </div>
@@ -39,8 +41,6 @@ const FeaturedContactItem: React.FC<FeaturedContactItemProps> = ({ contact, navi
     </div>
 );
 
-// FIX: Define props with an interface and use React.FC to correctly type the component,
-// which resolves issues with special props like 'key'.
 interface DepartmentListItemProps {
     department: Department;
     navigateTo: (page: string, params?: any) => void;
@@ -63,14 +63,53 @@ const DepartmentListItem: React.FC<DepartmentListItemProps> = ({ department, nav
     );
 };
 
+const groupAdvisors = (contacts: Colleague[]) => {
+    return contacts.reduce((acc, contact) => {
+        const group = contact.serviceGroup || '其他顾问';
+        if (!acc[group]) {
+            acc[group] = [];
+        }
+        acc[group].push(contact);
+        return acc;
+    }, {} as Record<string, Colleague[]>);
+};
+
+const AdvisorsCard = ({ navigateTo }: { navigateTo: (page: string, params: any) => void }) => {
+    const groupedAdvisors = groupAdvisors(featuredContacts);
+    const advisorGroups = Object.keys(groupedAdvisors);
+    
+    return (
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+            {advisorGroups.map((groupName, index) => (
+                <div key={groupName}>
+                    {advisorGroups.length > 1 && (
+                        <div className={`px-4 pt-3 pb-1 ${index > 0 ? 'border-t border-slate-100' : ''}`}>
+                            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{groupName}</h2>
+                        </div>
+                    )}
+                    <div className="divide-y divide-slate-100">
+                        {groupedAdvisors[groupName].map(contact => (
+                            <FeaturedContactItem key={contact.id} contact={contact} navigateTo={navigateTo} />
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
+
 
 export const ContactsPage = ({ navigateTo }: { navigateTo: (page: string, params?: any) => void; }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    
+    const [expandedCompanyId, setExpandedCompanyId] = useState<string | null>(companies[0]?.id || null);
+
     const filteredColleagues = searchTerm 
         ? colleagues.filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase()))
         : [];
-    const totalColleagues = colleagues.length;
+    
+    const handleToggleCompany = (companyId: string) => {
+        setExpandedCompanyId(prevId => prevId === companyId ? null : companyId);
+    };
 
     return (
         <div className="w-full h-screen flex flex-col bg-slate-100">
@@ -106,7 +145,7 @@ export const ContactsPage = ({ navigateTo }: { navigateTo: (page: string, params
             <main className="flex-grow overflow-y-auto p-4">
                 {searchTerm ? (
                      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                        {filteredColleagues.length > 0 && (
+                        {filteredColleagues.length > 0 ? (
                             <div className="divide-y divide-slate-100">
                                 {filteredColleagues.map(colleague => (
                                     <div key={colleague.id} onClick={() => navigateTo('contact-details', { contactId: colleague.id })} className="flex items-center px-4 py-3 cursor-pointer hover:bg-slate-50">
@@ -120,36 +159,44 @@ export const ContactsPage = ({ navigateTo }: { navigateTo: (page: string, params
                                     </div>
                                 ))}
                             </div>
-                        )}
-                        {filteredColleagues.length === 0 && <p className="text-center text-slate-500 py-10">未找到相关联系人</p>}
+                        ) : <p className="text-center text-slate-500 py-10">未找到相关联系人</p>}
                     </div>
                 ) : (
                     <div className="space-y-4">
-                        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div className="divide-y divide-slate-100">
-                                {featuredContacts.map(contact => (
-                                    <FeaturedContactItem key={contact.id} contact={contact} navigateTo={navigateTo} />
-                                ))}
-                            </div>
-                        </div>
+                        <AdvisorsCard navigateTo={navigateTo} />
 
-                        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div className="px-4 py-3 border-b border-slate-100 flex items-center">
-                                 <div className="w-8 h-8 bg-green-100 rounded-md flex items-center justify-center mr-3">
-                                    <BuildingOfficeIcon className="w-5 h-5 text-[#5fc38f]" />
+                        {companies.map(company => {
+                            const companyDepartments = departments.filter(d => d.companyId === company.id);
+                            const companyColleagueCount = colleagues.filter(c => c.companyId === company.id).length;
+                            const isExpanded = expandedCompanyId === company.id;
+
+                            return (
+                                <div key={company.id} className="bg-white rounded-xl shadow-sm overflow-hidden">
+                                    <div onClick={() => handleToggleCompany(company.id)} className="px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-slate-50">
+                                        <div className="flex items-center">
+                                            <div className="w-8 h-8 bg-green-100 rounded-md flex items-center justify-center mr-3">
+                                                <BuildingOfficeIcon className="w-5 h-5 text-[#5fc38f]" />
+                                            </div>
+                                            <h2 className="text-slate-800 font-semibold">{company.name} <span className="text-slate-500 font-normal">({companyColleagueCount})</span></h2>
+                                        </div>
+                                        {isExpanded ? <ChevronUpIcon className="w-5 h-5 text-slate-400" /> : <ChevronDownIcon className="w-5 h-5 text-slate-400" />}
+                                    </div>
+                                    {isExpanded && (
+                                        <div className="border-t border-slate-100">
+                                            <div className="divide-y divide-slate-100">
+                                                {companyDepartments.map(dept => (
+                                                    <DepartmentListItem 
+                                                        key={dept.id} 
+                                                        department={dept}
+                                                        navigateTo={navigateTo}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                                <h2 className="text-slate-800 font-semibold">上海云才网络技术有限公司 <span className="text-slate-500 font-normal">({totalColleagues})</span></h2>
-                            </div>
-                            <div className="divide-y divide-slate-100">
-                                {departments.map(dept => (
-                                    <DepartmentListItem 
-                                        key={dept.id} 
-                                        department={dept}
-                                        navigateTo={navigateTo}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+                            );
+                        })}
                     </div>
                 )}
             </main>

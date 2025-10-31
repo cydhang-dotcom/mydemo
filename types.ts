@@ -145,6 +145,8 @@ export interface Colleague {
     phone: string;
     email: string;
     specialty?: string;
+    companyId?: string;
+    serviceGroup?: string;
 }
 
 export interface Department {
@@ -152,4 +154,10 @@ export interface Department {
     name: string;
     memberCount: number;
     parentId: string | null;
+    companyId: string;
+}
+
+export interface Company {
+    id: string;
+    name: string;
 }
