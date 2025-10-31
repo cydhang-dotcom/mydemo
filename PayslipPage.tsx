@@ -53,8 +53,6 @@ export const PayslipPage = ({ onBack }: { onBack: () => void }) => {
                             <ChevronRightIcon className="!w-5 !h-5 ml-1 text-[#5fc38f]" />
                         </button>
                     </div>
-
-                    <div className="border-t border-slate-100"></div>
                     
                     {/* Net Pay Summary */}
                     <div className="p-6">
@@ -88,8 +86,6 @@ export const PayslipPage = ({ onBack }: { onBack: () => void }) => {
                         </div>
                     </div>
 
-                    <div className="border-t border-slate-100"></div>
-
                     {/* Detailed Breakdown */}
                     <div className="p-6">
                         {/* Gross Pay Section */}
@@ -97,7 +93,7 @@ export const PayslipPage = ({ onBack }: { onBack: () => void }) => {
                              <div className="flex justify-between items-center py-2 border-b border-slate-100 mb-2">
                                 <h3 className="font-bold text-lg text-slate-800">应发项目</h3>
                             </div>
-                            <div className="divide-y divide-slate-100">
+                            <div>
                                 {payslipData.grossPay.items.map((item, index) => (
                                     <BreakdownRow key={`gross-${index}`} label={item.label} value={formatAmount(item.value)} />
                                 ))}
@@ -113,7 +109,7 @@ export const PayslipPage = ({ onBack }: { onBack: () => void }) => {
                              <div className="flex justify-between items-center py-2 border-b border-slate-100 mb-2">
                                 <h3 className="font-bold text-lg text-slate-800">扣除项目</h3>
                             </div>
-                            <div className="divide-y divide-slate-100">
+                            <div>
                                 {payslipData.deductions.items.map((item, index) => (
                                     <BreakdownRow key={`deduction-${index}`} label={item.label} value={formatAmount(item.value)} />
                                 ))}
