@@ -1,13 +1,26 @@
 
 import React, { useState } from 'react';
 import { Header } from './Header';
-import { SearchIcon, ChevronDownIcon, BuildingOfficeIcon, LocationPinIcon, ImageIcon, PillIcon, UmbrellaIcon, BriefcaseIcon, CheckIcon, UserCircleIcon } from './icons';
+import { 
+    SearchIcon, 
+    LocationPinIcon, 
+    PillIcon, 
+    UmbrellaIcon, 
+    BriefcaseIcon, 
+    CheckIcon,
+    ChevronRightIcon,
+    DocumentTextIcon,
+    ClockIcon,
+    BackIcon,
+    MoreIcon,
+    MinusIcon,
+    BullseyeIcon
+} from './icons';
 import { approvalsData } from './mockdata/approvals';
 
-export const OAApprovalPage = ({ onBack }: { onBack: () => void }) => {
+export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, navigateTo: (page: string, params?: any) => void }) => {
     const [activeMainTab, setActiveMainTab] = useState('待处理');
     const [activeSubTab, setActiveSubTab] = useState('全部');
-    const [activeFooterTab, setActiveFooterTab] = useState('我审批的');
 
     const mainTabs = [
         { name: '待处理', badge: 28 },
@@ -16,141 +29,101 @@ export const OAApprovalPage = ({ onBack }: { onBack: () => void }) => {
 
     const subTabs = ['全部', '合同', '考勤'];
     
-    const footerTabs = [
-        { name: '我提交的' },
-        { name: '我审批的', hasBadge: true },
-        { name: '审批统计' }
-    ];
-
     const getIcon = (type: string) => {
-        const props = { className: "w-6 h-6 text-emerald-500" };
+        const props = { className: "w-5 h-5" };
         switch (type) {
-            case 'briefcase': return <BriefcaseIcon {...props} />;
-            case 'pill': return <PillIcon {...props} />;
-            case 'umbrella': return <UmbrellaIcon {...props} />;
-            default: return <BriefcaseIcon {...props} />;
+            case 'briefcase': return <div className="p-2 rounded-xl bg-emerald-50 text-emerald-500"><BriefcaseIcon {...props} /></div>;
+            case 'pill': return <div className="p-2 rounded-xl bg-orange-50 text-orange-500"><PillIcon {...props} /></div>;
+            case 'umbrella': return <div className="p-2 rounded-xl bg-blue-50 text-blue-500"><UmbrellaIcon {...props} /></div>;
+            default: return <div className="p-2 rounded-xl bg-slate-50 text-slate-500"><BriefcaseIcon {...props} /></div>;
         }
     };
 
     return (
-        <div className="w-full bg-slate-100 h-screen flex flex-col relative">
-            <Header title="OA审批" onBack={onBack} />
-            
-            <div className="bg-white p-4 border-b border-slate-100 space-y-4 flex-shrink-0">
-                <div className="relative w-full">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <SearchIcon className="w-5 h-5 text-slate-400" />
+        <div className="w-full bg-[#f8fbfd] h-screen flex flex-col relative">
+            {/* Professional Header mimicking Screenshot 2025-12-19 style */}
+            <header className="bg-white px-4 pt-6 pb-2 border-b border-slate-50 sticky top-0 z-30">
+                <div className="grid grid-cols-3 items-center h-10 mb-2">
+                    <button onClick={onBack} className="justify-self-start p-1 -ml-1">
+                        <BackIcon className="w-6 h-6 text-slate-800" />
+                    </button>
+                    <h1 className="justify-self-center text-lg font-bold text-slate-800">审批列表</h1>
+                    <div className="justify-self-end flex items-center space-x-2 border border-slate-200 rounded-full px-2 py-1">
+                        <MoreIcon className="w-4 h-4 text-slate-800" />
+                        <MinusIcon className="w-4 h-4 text-slate-300" />
+                        <BullseyeIcon className="w-4 h-4 text-slate-800" />
                     </div>
-                    <input
-                        type="search"
-                        placeholder="请输入姓名"
-                        className="w-full bg-slate-100 placeholder:text-slate-400 text-slate-800 rounded-lg border-none pl-10 pr-4 py-2.5 focus:ring-1 focus:ring-[#5fc38f]"
-                    />
                 </div>
 
-                <div className="flex justify-around">
-                    {mainTabs.map(tab => (
-                        <button
-                            key={tab.name}
-                            onClick={() => setActiveMainTab(tab.name)}
-                            className={`flex items-center pb-2 px-4 font-bold text-base relative ${
-                                activeMainTab === tab.name ? 'text-[#5fc38f]' : 'text-slate-500'
-                            }`}
-                        >
-                            {tab.name}
-                            {tab.badge && <span className="ml-1 bg-red-500 text-white text-[10px] rounded-full px-1.5 py-0.5">{tab.badge}</span>}
-                            {activeMainTab === tab.name && <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#5fc38f] rounded-full"></div>}
-                        </button>
-                    ))}
-                </div>
-
-                <div className="flex items-center justify-between">
-                    <div className="flex space-x-2">
+                <div className="flex justify-between items-end px-2 mt-4">
+                    <div className="flex space-x-6">
+                        {mainTabs.map(tab => (
+                            <button
+                                key={tab.name}
+                                onClick={() => setActiveMainTab(tab.name)}
+                                className={`flex items-center pb-2 px-1 font-bold text-sm relative transition-all ${
+                                    activeMainTab === tab.name ? 'text-slate-900' : 'text-slate-400'
+                                }`}
+                            >
+                                {tab.name}
+                                {tab.badge && <span className="ml-1 text-[9px] font-black bg-red-500 text-white rounded-full px-1.5 py-0.5">{tab.badge}</span>}
+                                {activeMainTab === tab.name && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#5fc38f] rounded-full"></div>}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="flex items-center space-x-2 mb-2">
                         {subTabs.map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveSubTab(tab)}
-                                className={`px-4 py-1 rounded-full text-xs border ${
-                                    activeSubTab === tab 
-                                    ? 'bg-[#5fc38f]/10 border-[#5fc38f] text-[#5fc38f]' 
-                                    : 'border-slate-200 text-slate-600'
+                                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                                    activeSubTab === tab ? 'bg-slate-800 text-white' : 'text-slate-400 border border-slate-100'
                                 }`}
                             >
                                 {tab}
                             </button>
                         ))}
                     </div>
-                    <button className="flex items-center text-xs text-[#5fc38f] border border-slate-200 rounded px-2 py-1">
-                        全部状态 <ChevronDownIcon className="w-3 h-3 ml-1" />
-                    </button>
                 </div>
-            </div>
+            </header>
 
-            <main className="flex-grow overflow-y-auto p-4 space-y-4 pb-24">
+            {/* Content List */}
+            <main className="flex-grow overflow-y-auto p-4 space-y-3 pb-24">
                 {approvalsData.map(item => (
-                    <div key={item.id} className="bg-white rounded-xl shadow-sm p-4 relative">
-                        <div className="absolute top-4 right-4 bg-slate-100 text-slate-400 text-[10px] px-2 py-0.5 rounded font-bold">
-                            {item.status}
-                        </div>
-                        
-                        <div className="flex items-start mb-4">
-                            <div className="w-10 h-10 border border-slate-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                                {getIcon(item.iconType)}
+                    <div 
+                        key={item.id} 
+                        onClick={() => navigateTo('oa-approval-detail', { approvalId: item.id })}
+                        className="bg-white rounded-2xl p-4 shadow-sm border border-slate-50 active:bg-slate-50 transition-colors cursor-pointer"
+                    >
+                        <div className="flex justify-between items-start mb-3">
+                            <div className="flex items-center">
+                                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-500 border-2 border-white shadow-sm">
+                                    {item.submitter.slice(-2)}
+                                </div>
+                                <div className="ml-3">
+                                    <h4 className="font-extrabold text-slate-800 text-[15px]">{item.submitter}</h4>
+                                    <div className="flex items-center text-[11px] text-slate-400 mt-0.5">
+                                        <ClockIcon className="w-3 h-3 mr-1" />
+                                        <span>12-19 08:20</span>
+                                    </div>
+                                </div>
                             </div>
+                            <span className="text-[10px] font-black text-[#5fc38f] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                                {item.status}
+                            </span>
+                        </div>
+
+                        <div className="flex items-center space-x-4 bg-slate-50/50 rounded-xl p-3 border border-slate-50">
+                            {getIcon(item.iconType)}
                             <div className="flex-grow">
-                                <div className="flex items-center flex-wrap gap-2">
-                                    <h3 className="font-bold text-slate-800 text-lg">{item.title}</h3>
-                                    {item.signed && <span className="text-[10px] text-emerald-500 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">已签到</span>}
-                                    {item.hasLocation && <LocationPinIcon className="w-4 h-4 text-emerald-500" />}
-                                    {item.hasImage && <ImageIcon className="w-4 h-4 text-emerald-500" />}
-                                </div>
-                                <div className="mt-3 space-y-1.5">
-                                    <p className="text-xs text-slate-500">
-                                        <span className="w-16 inline-block">{item.type}时间:</span>
-                                        <span className="text-slate-800">{item.period}</span>
-                                    </p>
-                                    {item.entity && (
-                                        <p className="text-xs text-slate-500">
-                                            <span className="w-16 inline-block">{item.type}公司:</span>
-                                            <span className="text-slate-800">{item.entity}</span>
-                                        </p>
-                                    )}
-                                </div>
+                                <p className="text-sm font-bold text-slate-800">{item.title}</p>
+                                <p className="text-[11px] text-slate-500 mt-1 line-clamp-1">{item.entity || item.period}</p>
                             </div>
-                        </div>
-                        <div className="pt-3 border-t border-slate-50 flex items-center">
-                            <div className="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                                <span className="text-[10px] text-blue-500 font-bold">{item.submitter.slice(-1)}</span>
-                            </div>
-                            <span className="text-xs text-slate-400">由 <span className="text-slate-800 font-medium">{item.submitter}</span> 提交</span>
+                            <ChevronRightIcon className="w-4 h-4 text-slate-300" />
                         </div>
                     </div>
                 ))}
             </main>
-
-            {/* Floating Bulk Approval Button */}
-            <button className="fixed bottom-24 right-6 w-14 h-14 bg-white rounded-full shadow-2xl flex flex-col items-center justify-center border border-slate-100 z-30 group active:scale-95 transition-transform">
-                <div className="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center mb-0.5">
-                    <CheckIcon className="w-4 h-4 text-slate-400" />
-                </div>
-                <span className="text-[10px] text-slate-500 font-medium">批量审批</span>
-            </button>
-
-            {/* Sub-Footer Approval Navigation */}
-            <nav className="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-100 flex h-14 z-20">
-                {footerTabs.map(tab => (
-                    <button
-                        key={tab.name}
-                        onClick={() => setActiveFooterTab(tab.name)}
-                        className={`flex-grow flex flex-col items-center justify-center text-xs relative ${
-                            activeFooterTab === tab.name ? 'text-[#5fc38f] font-bold' : 'text-slate-500'
-                        }`}
-                    >
-                        {tab.name}
-                        {tab.hasBadge && <div className="absolute top-3 right-1/4 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></div>}
-                    </button>
-                ))}
-            </nav>
         </div>
     );
 };

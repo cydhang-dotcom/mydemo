@@ -10,6 +10,7 @@ import { AttendancePage } from './AttendancePage';
 import { AttendanceQueryPage } from './AttendanceQueryPage';
 import { AttendanceCalendarPage } from './AttendanceCalendarPage';
 import { OAApprovalPage } from './OAApprovalPage';
+import { OAApprovalDetailPage } from './OAApprovalDetailPage';
 import { DocumentsPage } from './DocumentsPage';
 import { CouponsPage } from './CouponsPage';
 import { EmployeeInfoPage } from './EmployeeInfoPage';
@@ -94,7 +95,9 @@ export const App = () => {
             case 'attendance-query':
                 return <AttendanceQueryPage onBack={onBack} />;
             case 'oa-approval':
-                return <OAApprovalPage onBack={onBack} />;
+                return <OAApprovalPage onBack={onBack} navigateTo={navigateTo} />;
+            case 'oa-approval-detail':
+                return <OAApprovalDetailPage onBack={onBack} approvalId={currentView.params.approvalId} />;
             case 'apply-selection':
                 return <ApplySelectionPage onBack={onBack} navigateTo={navigateTo} />;
             case 'manual-checkin':

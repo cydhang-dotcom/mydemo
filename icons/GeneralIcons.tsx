@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { IconProps } from './types';
 
@@ -54,5 +55,24 @@ export const LocationPinIcon: React.FC<IconProps> = ({ className = "w-6 h-6" }) 
 export const DiamondIcon: React.FC<IconProps> = ({ className = "w-4 h-4" }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
         <path d="M10 1.618a.75.75 0 01.53.22l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 01-1.06 0L4.22 8.148a.75.75 0 010-1.06l5.25-5.25a.75.75 0 01.53-.22z" />
+    </svg>
+);
+
+export const IdentificationIcon: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.169.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.337 0Z" />
+    </svg>
+);
+
+export const AcademicCapIcon: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147L12 14.243l7.74-4.096a.75.75 0 0 0 0-1.322L12 4.729l-7.74 4.096a.75.75 0 0 0 0 1.322z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12.5v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-3m-9 3.75h6" />
+    </svg>
+);
+
+export const BookOpenIcon: React.FC<IconProps> = ({ className = "w-6 h-6" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" />
     </svg>
 );
