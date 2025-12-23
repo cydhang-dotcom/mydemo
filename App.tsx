@@ -5,6 +5,7 @@ import { PayslipPage } from './PayslipPage';
 import { TaxPage } from './TaxPage';
 import { InsurancePage } from './InsurancePage';
 import { ContractsPage } from './ContractsPage';
+import { ContractDetailPage } from './ContractDetailPage';
 import { AttendancePage } from './AttendancePage';
 import { AttendanceQueryPage } from './AttendanceQueryPage';
 import { AttendanceCalendarPage } from './AttendanceCalendarPage';
@@ -83,7 +84,9 @@ export const App = () => {
             case 'insurance':
                 return <InsurancePage onBack={onBack} />;
             case 'contracts':
-                return <ContractsPage onBack={onBack} />;
+                return <ContractsPage onBack={onBack} navigateTo={navigateTo} />;
+            case 'contract-detail':
+                return <ContractDetailPage onBack={onBack} contractId={currentView.params.contractId} />;
             case 'attendance':
                 return <AttendancePage onBack={onBack} />;
             case 'attendance-calendar':

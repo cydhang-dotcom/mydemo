@@ -1,10 +1,11 @@
+
 import React, { useState } from 'react';
 import { Header } from './Header';
 import { contractsData, contractTypes } from './mockdata';
 import { BuildingOfficeIcon, ChevronRightIcon } from './icons';
 import type { Contract } from './types';
 
-const ContractCard = ({ contract }: { contract: Contract }) => (
+const ContractCard = ({ contract, onClick }: { contract: Contract; onClick: () => void }) => (
     <div className="flex-1 ml-6">
         <h3 className="font-semibold text-slate-800">
             {contract.title}
@@ -12,7 +13,7 @@ const ContractCard = ({ contract }: { contract: Contract }) => (
                 ({contract.status})
             </span>
         </h3>
-        <div className="mt-3 bg-green-50/70 rounded-lg p-4 flex items-center justify-between cursor-pointer hover:bg-green-100/80 transition-colors">
+        <div onClick={onClick} className="mt-3 bg-green-50/70 rounded-lg p-4 flex items-center justify-between cursor-pointer hover:bg-green-100/80 transition-colors">
             <div>
                 <div className="flex items-center">
                     <p className="font-bold text-slate-900">{contract.name}</p>
@@ -28,7 +29,7 @@ const ContractCard = ({ contract }: { contract: Contract }) => (
     </div>
 );
 
-export const ContractsPage = ({ onBack }: { onBack: () => void }) => {
+export const ContractsPage = ({ onBack, navigateTo }: { onBack: () => void; navigateTo: (page: string, params?: any) => void }) => {
     const [activeFilter, setActiveFilter] = useState(contractTypes[0]);
     const filteredContracts = contractsData.filter(c => c.type === activeFilter);
 
@@ -68,7 +69,10 @@ export const ContractsPage = ({ onBack }: { onBack: () => void }) => {
                             {filteredContracts.map(contract => (
                                 <div key={contract.id} className="flex items-start relative">
                                     <div className="flex-shrink-0 w-6 h-6 bg-green-500 rounded-full border-4 border-white flex items-center justify-center z-10"></div>
-                                    <ContractCard contract={contract} />
+                                    <ContractCard 
+                                        contract={contract} 
+                                        onClick={() => navigateTo('contract-detail', { contractId: contract.id })} 
+                                    />
                                 </div>
                             ))}
                         </div>
