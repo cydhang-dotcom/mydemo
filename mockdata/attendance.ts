@@ -1,3 +1,16 @@
+
+export const attendanceQueryData = [
+    {
+        date: '2025-12-19',
+        records: [
+            { id: '1', name: '杭志平', avatar: '志平', color: 'bg-yellow-400', checkIn: '未打卡', checkOut: '未打卡', duration: '-', status: 'abnormal' },
+            { id: '2', name: '马海荣', avatar: '海荣', color: 'bg-yellow-500', checkIn: '08:55 正常', checkOut: '未打卡', duration: '-', status: 'abnormal' },
+            { id: '3', name: '杨佳军', avatar: '佳军', color: 'bg-orange-400', checkIn: '09:01 正常', checkOut: '未打卡', duration: '-', status: 'abnormal' },
+            { id: '4', name: '陈莉', avatar: '陈莉', color: 'bg-pink-400', checkIn: '未打卡', checkOut: '未打卡', duration: '-', status: 'abnormal' },
+        ]
+    }
+];
+
 export const attendanceDataByMonth: { [key: string]: any } = {
     '2025-09': {
         company: '上海云才网络技术有限公司',

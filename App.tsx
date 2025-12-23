@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { HomePage } from './HomePage';
 import { PayslipPage } from './PayslipPage';
@@ -5,6 +6,9 @@ import { TaxPage } from './TaxPage';
 import { InsurancePage } from './InsurancePage';
 import { ContractsPage } from './ContractsPage';
 import { AttendancePage } from './AttendancePage';
+import { AttendanceQueryPage } from './AttendanceQueryPage';
+import { AttendanceCalendarPage } from './AttendanceCalendarPage';
+import { OAApprovalPage } from './OAApprovalPage';
 import { DocumentsPage } from './DocumentsPage';
 import { CouponsPage } from './CouponsPage';
 import { EmployeeInfoPage } from './EmployeeInfoPage';
@@ -17,6 +21,10 @@ import { ContactsPage } from './ContactsPage';
 import { DepartmentDetailPage } from './DepartmentDetailPage';
 import { ContactDetailPage } from './ContactDetailPage';
 import { DailyPage } from './DailyPage';
+import { ApplySelectionPage } from './ApplySelectionPage';
+import { ManualCheckInPage } from './ManualCheckInPage';
+import { BusinessTripPage } from './BusinessTripPage';
+import { LeaveRequestPage } from './LeaveRequestPage';
 import { BottomNav, Tab } from './BottomNav';
 
 interface HistoryItem {
@@ -78,6 +86,20 @@ export const App = () => {
                 return <ContractsPage onBack={onBack} />;
             case 'attendance':
                 return <AttendancePage onBack={onBack} />;
+            case 'attendance-calendar':
+                return <AttendanceCalendarPage onBack={onBack} />;
+            case 'attendance-query':
+                return <AttendanceQueryPage onBack={onBack} />;
+            case 'oa-approval':
+                return <OAApprovalPage onBack={onBack} />;
+            case 'apply-selection':
+                return <ApplySelectionPage onBack={onBack} navigateTo={navigateTo} />;
+            case 'manual-checkin':
+                return <ManualCheckInPage onBack={onBack} />;
+            case 'business-trip':
+                return <BusinessTripPage onBack={onBack} />;
+            case 'leave-request':
+                return <LeaveRequestPage onBack={onBack} />;
             case 'services':
                 return <ServicesPage onBack={onBack} navigateTo={navigateTo} />;
             case 'service-details':
