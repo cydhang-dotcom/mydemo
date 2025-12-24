@@ -15,9 +15,6 @@ import {
     UserCircleIcon,
 } from './icons';
 
-/**
- * Premium Consolidated Profile Card (Synced from HomePage style)
- */
 const ProfileCard = ({ navigateTo }: { navigateTo: (page: string, params?: any) => void; }) => (
     <div 
         onClick={() => navigateTo('employee-info')}
@@ -35,15 +32,15 @@ const ProfileCard = ({ navigateTo }: { navigateTo: (page: string, params?: any) 
 
             <div className="flex flex-col">
                 <div className="flex items-center">
-                    <h2 className="font-extrabold text-2xl text-slate-900 leading-none">杭志平</h2>
-                    <span className="ml-2 bg-slate-100 text-slate-500 text-[10px] px-1.5 py-0.5 rounded font-bold">研发总监</span>
+                    <h2 className="font-bold text-xl text-slate-900 leading-none">杭志平</h2>
+                    <span className="ml-2 bg-slate-100 text-slate-500 text-[11px] px-1.5 py-0.5 rounded font-semibold">研发总监</span>
                 </div>
                 
                 <div 
                     className="flex items-center mt-2 group/company"
                     onClick={(e) => { e.stopPropagation(); alert('切换公司'); }}
                 >
-                    <span className="text-xs text-slate-400 group-hover/company:text-[#5fc38f] transition-colors truncate max-w-[180px]">
+                    <span className="text-xs text-slate-400 font-medium group-hover/company:text-[#5fc38f] transition-colors truncate max-w-[180px]">
                         上海云才网络技术有限公司
                     </span>
                     <ChevronDownIcon className="w-3.5 h-3.5 ml-1 text-slate-300 group-hover/company:text-[#5fc38f]" />
@@ -67,32 +64,43 @@ const AttendanceSection = () => {
 
     return (
         <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col items-center border border-slate-50">
-            <div className="mb-6 text-center">
-                <p className="text-xs text-slate-400 font-bold mb-1 tracking-wider uppercase">
-                    {time.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric', weekday: 'long' })}
-                </p>
-                <p className="text-5xl font-black text-slate-800 tracking-tighter">
+            {/* Digital Clock Section */}
+            <div className="mb-8 text-center">
+                <div className="flex items-center justify-center space-x-2 mb-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <p className="text-[11px] text-slate-400 font-bold tracking-[0.1em] uppercase">
+                        {time.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric', weekday: 'long' })}
+                    </p>
+                </div>
+                <p className="text-4xl font-bold text-slate-800 tracking-tight tabular-nums">
                     {time.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                 </p>
             </div>
 
+            {/* Attendance Cards Grid */}
             <div className="grid grid-cols-2 gap-4 w-full">
-                <div className="bg-[#f0faf5] rounded-2xl p-5 flex flex-col items-center justify-center transition-all active:scale-95 cursor-pointer border border-emerald-50 group hover:border-emerald-200">
-                    <p className="text-[#5fc38f] text-xl font-extrabold">上班签到</p>
-                    <p className="text-[#5fc38f]/70 text-sm mt-1 font-bold">09:00</p>
+                {/* Check-in Card (Active) */}
+                <div className="bg-[#f0faf5] rounded-2xl p-5 flex flex-col items-center justify-center transition-all active:scale-[0.96] cursor-pointer border border-emerald-100 group shadow-sm hover:shadow-md relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500/20"></div>
+                    <span className="text-[10px] text-emerald-600/60 font-black uppercase tracking-widest mb-2">上班签到</span>
+                    <p className="text-3xl font-bold text-emerald-600 tracking-tighter">09:00</p>
+                    <div className="mt-3 px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[9px] font-black uppercase tracking-tighter">待打卡</div>
                 </div>
-                <div className="bg-slate-50 rounded-2xl p-5 flex flex-col items-center justify-center transition-all active:scale-95 cursor-pointer border border-slate-100 opacity-60">
-                    <p className="text-slate-400 text-xl font-extrabold">下班签退</p>
-                    <p className="text-slate-400 text-sm mt-1 font-bold">17:30</p>
+
+                {/* Check-out Card (Disabled/Inactive) */}
+                <div className="bg-slate-50 rounded-2xl p-5 flex flex-col items-center justify-center border border-slate-100 opacity-60 relative">
+                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-2">下班签退</span>
+                    <p className="text-3xl font-bold text-slate-400 tracking-tighter">17:30</p>
+                    <div className="mt-3 px-2 py-0.5 rounded-full bg-slate-200 text-slate-400 text-[9px] font-black uppercase tracking-tighter">未到时</div>
                 </div>
             </div>
             
-            <div className="w-full mt-6 px-1 flex justify-between items-center">
-                <div className="flex items-center text-[10px] text-slate-400 font-bold">
-                    <LocationPinIcon className="w-4 h-4 mr-1 text-[#5fc38f]" />
-                    <span>上海市浦东新区张江路...</span>
+            <div className="w-full mt-8 px-1 flex justify-between items-center">
+                <div className="flex items-center text-[11px] text-slate-400 font-semibold max-w-[70%]">
+                    <LocationPinIcon className="w-4 h-4 mr-1 text-[#5fc38f] flex-shrink-0" />
+                    <span className="truncate">上海市浦东新区张江路云才大厦...</span>
                 </div>
-                <button className="flex items-center text-[10px] text-[#5fc38f] font-black uppercase tracking-widest">
+                <button className="flex items-center text-[11px] text-[#5fc38f] font-bold uppercase tracking-wider bg-emerald-50 px-3 py-1.5 rounded-full active:scale-95 transition-all">
                     <span>刷新</span>
                     <ArrowPathIcon className="w-3.5 h-3.5 ml-1" />
                 </button>
@@ -121,7 +129,7 @@ const TodoSection = ({ navigateTo }: { navigateTo: (page: string) => void }) => 
             <div className="flex justify-between items-center px-1">
                 <div className="flex items-center">
                     <h3 className="font-bold text-slate-900 text-lg">待办事项</h3>
-                    <span className="ml-2 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">12</span>
+                    <span className="ml-2 bg-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow-sm">12</span>
                 </div>
                 <button onClick={() => navigateTo('oa-approval')} className="text-slate-400 text-sm font-bold flex items-center hover:text-slate-600 transition-colors">
                     查看全部 <ChevronRightIcon className="w-4 h-4 ml-0.5" />
@@ -136,19 +144,18 @@ const TodoSection = ({ navigateTo }: { navigateTo: (page: string) => void }) => 
                             onClick={() => navigateTo(todo.page)}
                             className="p-5 flex items-center active:bg-slate-50 transition-colors cursor-pointer group"
                         >
-                            {/* Status Indicator Dot */}
                             <div className={`w-2 h-2 rounded-full mr-4 flex-shrink-0 shadow-sm ${typeColors[todo.type as keyof typeof typeColors]}`}></div>
                             
                             <div className="flex-grow min-w-0 pr-4">
                                 <div className="flex items-center mb-1">
-                                    <h4 className="font-extrabold text-slate-800 text-[15px]">{todo.title}</h4>
-                                    <span className="ml-2 text-[10px] font-black text-slate-300 uppercase tracking-tighter">{todo.time}</span>
+                                    <h4 className="font-bold text-slate-800 text-base">{todo.title}</h4>
+                                    <span className="ml-2 text-[11px] font-medium text-slate-300 uppercase tracking-tight">{todo.time}</span>
                                 </div>
-                                <p className="text-slate-500 text-xs truncate font-medium">{todo.desc}</p>
+                                <p className="text-slate-500 text-[13px] truncate font-medium">{todo.desc}</p>
                             </div>
 
                             <div className="flex-shrink-0">
-                                <button className="text-[#5fc38f] text-[11px] font-black px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100/50 group-hover:bg-[#5fc38f] group-hover:text-white transition-all active:scale-90">
+                                <button className="text-[#5fc38f] text-[11px] font-bold px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100/50 group-hover:bg-[#5fc38f] group-hover:text-white transition-all active:scale-90">
                                     去处理
                                 </button>
                             </div>
@@ -199,7 +206,7 @@ const HrServicesSection = ({ navigateTo }: { navigateTo: (page: string) => void 
                                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white shadow-sm"></span>
                             )}
                         </div>
-                        <p className="text-[11px] text-slate-700 font-bold mt-3 whitespace-nowrap">{service.name}</p>
+                        <p className="text-[12px] text-slate-700 font-semibold mt-3 whitespace-nowrap">{service.name}</p>
                     </div>
                 ))}
             </div>
@@ -210,9 +217,8 @@ const HrServicesSection = ({ navigateTo }: { navigateTo: (page: string) => void 
 export const DailyPage = ({ navigateTo }: { navigateTo: (page: string, params?: any) => void; }) => {
     return (
         <div className="w-full flex flex-col min-h-full bg-[#f8fbfd]">
-            {/* Top Navigation Bar with Page Title */}
             <header className="bg-white px-4 h-12 flex items-center justify-center border-b border-slate-50 sticky top-0 z-20">
-                <h2 className="text-slate-800 font-black text-base tracking-tight">员工日常</h2>
+                <h2 className="text-slate-800 font-bold text-base tracking-tight">员工日常</h2>
                 <div className="absolute right-4 flex items-center space-x-3 bg-slate-50 rounded-full px-2 py-1 border border-slate-100">
                     <div className="w-1.5 h-1.5 rounded-full bg-slate-900"></div>
                     <div className="w-1 h-1 rounded-full bg-slate-900"></div>
@@ -224,11 +230,8 @@ export const DailyPage = ({ navigateTo }: { navigateTo: (page: string, params?: 
 
             <main className="flex-grow p-4 space-y-7 pb-24">
                 <ProfileCard navigateTo={navigateTo} />
-                
                 <AttendanceSection />
-                
                 <TodoSection navigateTo={navigateTo} />
-                
                 <HrServicesSection navigateTo={navigateTo} />
             </main>
         </div>

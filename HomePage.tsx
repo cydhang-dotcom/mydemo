@@ -9,17 +9,12 @@ import {
 import { servicesData } from './mockdata';
 import type { ServiceStatus } from './types';
 
-/**
- * Premium Consolidated Profile Card
- * Integrates Avatar, Name, Role, Company Selector and Navigation Entry
- */
 const ProfileCard = ({ navigateTo }: { navigateTo: (page: string, params?: any) => void; }) => (
     <div 
         onClick={() => navigateTo('employee-info')}
         className="mx-4 mt-4 mb-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-50 flex items-center justify-between group cursor-pointer active:scale-[0.98] transition-all"
     >
         <div className="flex items-center space-x-4">
-            {/* Avatar with Status Badge */}
             <div className="relative">
                 <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500 border border-emerald-100 shadow-sm overflow-hidden">
                     <UserCircleIcon className="w-12 h-12" />
@@ -29,18 +24,17 @@ const ProfileCard = ({ navigateTo }: { navigateTo: (page: string, params?: any) 
                 </div>
             </div>
 
-            {/* User Info & Company */}
             <div className="flex flex-col">
                 <div className="flex items-center">
-                    <h2 className="font-extrabold text-2xl text-slate-900 leading-none">杭志平</h2>
-                    <span className="ml-2 bg-slate-100 text-slate-500 text-[10px] px-1.5 py-0.5 rounded font-bold">研发总监</span>
+                    <h2 className="font-bold text-xl text-slate-900 leading-none">杭志平</h2>
+                    <span className="ml-2 bg-slate-100 text-slate-500 text-[11px] px-1.5 py-0.5 rounded font-semibold">研发总监</span>
                 </div>
                 
                 <div 
                     className="flex items-center mt-2 group/company"
                     onClick={(e) => { e.stopPropagation(); alert('切换公司'); }}
                 >
-                    <span className="text-xs text-slate-400 group-hover/company:text-[#5fc38f] transition-colors truncate max-w-[180px]">
+                    <span className="text-xs text-slate-400 font-medium group-hover/company:text-[#5fc38f] transition-colors truncate max-w-[180px]">
                         上海云才网络技术有限公司
                     </span>
                     <ChevronDownIcon className="w-3.5 h-3.5 ml-1 text-slate-300 group-hover/company:text-[#5fc38f]" />
@@ -48,7 +42,6 @@ const ProfileCard = ({ navigateTo }: { navigateTo: (page: string, params?: any) 
             </div>
         </div>
 
-        {/* Action Entry */}
         <div className="w-8 h-8 flex items-center justify-center text-slate-300 group-hover:text-slate-500 transition-colors">
             <ChevronRightIcon className="w-6 h-6" />
         </div>
@@ -76,7 +69,6 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
         { name: '考勤汇总', icon: <CalendarIcon />, action: () => navigateTo('attendance') },
     ];
     
-    // Show only the most relevant services (processing or latest)
     const serviceItems = servicesData.slice(0, 3);
     const inProgressCount = servicesData.filter(s => s.status === '处理中').length;
 
@@ -90,7 +82,6 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
 
     return (
          <div className="w-full flex flex-col min-h-full bg-[#f8fbfd]">
-            {/* Top Navigation Bar */}
             <header className="bg-white px-4 h-12 flex items-center justify-center border-b border-slate-50 sticky top-0 z-20">
                 <h2 className="text-slate-800 font-bold text-base">我的</h2>
                 <div className="absolute right-4 flex items-center space-x-3 bg-slate-50 rounded-full px-2 py-1 border border-slate-100">
@@ -103,11 +94,9 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
             </header>
                 
             <main className="flex-grow pb-24 space-y-6">
-                {/* Unified Premium Profile Card */}
                 <ProfileCard navigateTo={navigateTo} />
                 
                 <div className="px-4 space-y-6">
-                    {/* Core Actions Card */}
                     <div className="p-5 bg-white rounded-2xl shadow-sm border border-slate-50">
                         <h3 className="font-bold text-slate-900 mb-6 text-base px-1">我的服务入口</h3>
                         <div className="grid grid-cols-4 gap-y-6 text-center">
@@ -116,19 +105,18 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
                                     <div className="w-14 h-14 bg-emerald-50/50 text-[#5fc38f] rounded-2xl flex items-center justify-center mb-2.5 transition-all group-active:scale-95 border border-emerald-50/50">
                                       {React.cloneElement(action.icon, { className: 'w-7 h-7' })}
                                     </div>
-                                    <p className="text-xs text-slate-600 font-bold">{action.name}</p>
+                                    <p className="text-[12px] text-slate-600 font-semibold">{action.name}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
                 
-                    {/* Services Summary Card - Refined to look like status list */}
                     <div className="p-6 bg-white rounded-2xl shadow-sm border border-slate-50">
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center">
                                 <h3 className="font-bold text-slate-900 text-lg">办理进度</h3>
                                 {inProgressCount > 0 && (
-                                    <span className="ml-2.5 bg-red-500 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
+                                    <span className="ml-2.5 bg-red-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
                                         {inProgressCount}
                                     </span>
                                 )}
@@ -145,15 +133,14 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
                                    className="flex justify-between items-center p-3 rounded-xl border border-slate-50 bg-slate-50/30 group cursor-pointer hover:bg-slate-50 transition-all active:scale-[0.98]"
                                >
                                    <div className="flex items-center">
-                                       {/* Status Dot */}
                                        <div className={`w-2 h-2 rounded-full mr-3 ${statusDots[item.status]}`}></div>
                                        <div className="flex flex-col">
                                            <p className="font-bold text-sm text-slate-800 group-hover:text-[#5fc38f] transition-colors">{item.type}</p>
-                                           <p className="text-[11px] text-slate-400 mt-0.5 font-medium">对象: {item.target}</p>
+                                           <p className="text-[12px] text-slate-400 mt-0.5 font-medium">对象: {item.target}</p>
                                        </div>
                                    </div>
                                    <div className="flex items-center">
-                                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${statusStyles[item.status]}`}>
+                                        <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${statusStyles[item.status]}`}>
                                             {item.status}
                                         </span>
                                         <ChevronRightIcon className="w-4 h-4 ml-2 text-slate-300" />
@@ -163,7 +150,6 @@ export const HomePage = ({ navigateTo }: { navigateTo: (page: string, params?: a
                         </div>
                     </div>
                     
-                    {/* Secondary Navigation List */}
                     <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-50">
                        {settingItems.map((item) => (
                            <div 

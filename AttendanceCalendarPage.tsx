@@ -129,15 +129,16 @@ export const AttendanceCalendarPage = ({ onBack }: { onBack: () => void }) => {
             </div>
 
             <main className="flex-grow overflow-y-auto p-4 space-y-6">
-                {/* Sign-in cards */}
+                {/* Sign-in cards updated style */}
                 <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-emerald-50 rounded-xl p-6 flex flex-col items-center justify-center border border-emerald-100">
-                        <span className="text-[#5fc38f] text-2xl font-bold">上班签到</span>
-                        <span className="text-[#5fc38f] text-base font-medium mt-1">09:00</span>
+                    <div className="bg-[#f0faf5] rounded-2xl p-6 flex flex-col items-center justify-center border border-emerald-100 shadow-sm relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500/20"></div>
+                        <span className="text-[10px] text-emerald-600/60 font-black uppercase tracking-widest mb-2">上班签到</span>
+                        <p className="text-3xl font-bold text-emerald-600 tracking-tighter">09:00</p>
                     </div>
-                    <div className="bg-emerald-50/40 rounded-xl p-6 flex flex-col items-center justify-center border border-emerald-50">
-                        <span className="text-[#5fc38f] opacity-80 text-2xl font-bold">下班签退</span>
-                        <span className="text-[#5fc38f] opacity-80 text-base font-medium mt-1">17:30</span>
+                    <div className="bg-slate-50 rounded-2xl p-6 flex flex-col items-center justify-center border border-slate-100 opacity-60">
+                        <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-2">下班签退</span>
+                        <p className="text-3xl font-bold text-slate-400 tracking-tighter">17:30</p>
                     </div>
                 </div>
 
@@ -170,10 +171,10 @@ export const AttendanceCalendarPage = ({ onBack }: { onBack: () => void }) => {
                             <div className="w-4 h-4 rounded-full border-4 border-white bg-blue-500 shadow-sm z-10 mt-1"></div>
                             <div className="ml-4 flex-grow bg-slate-50 rounded-xl p-4 flex items-center justify-between">
                                 <div className="flex items-center">
-                                    <span className="text-slate-500 text-sm">上班时间</span>
+                                    <span className="text-slate-500 text-sm font-medium">上班时间</span>
                                     <span className="ml-3 text-emerald-400 font-bold text-sm">未打卡</span>
                                 </div>
-                                <button className="text-emerald-400 text-sm font-medium">补签</button>
+                                <button className="text-emerald-400 text-sm font-bold bg-emerald-50 px-3 py-1 rounded-full">补签</button>
                             </div>
                         </div>
 
@@ -181,10 +182,10 @@ export const AttendanceCalendarPage = ({ onBack }: { onBack: () => void }) => {
                             <div className="w-4 h-4 rounded-full border-4 border-white bg-blue-500 shadow-sm z-10 mt-1"></div>
                             <div className="ml-4 flex-grow bg-slate-50 rounded-xl p-4 flex items-center justify-between">
                                 <div className="flex items-center">
-                                    <span className="text-slate-500 text-sm">下班时间</span>
+                                    <span className="text-slate-500 text-sm font-medium">下班时间</span>
                                     <span className="ml-3 text-emerald-400 font-bold text-sm">未打卡</span>
                                 </div>
-                                <button className="text-emerald-400 text-sm font-medium">补签</button>
+                                <button className="text-emerald-400 text-sm font-bold bg-emerald-50 px-3 py-1 rounded-full">补签</button>
                             </div>
                         </div>
                     </div>

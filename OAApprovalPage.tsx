@@ -41,7 +41,6 @@ export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, nav
 
     return (
         <div className="w-full bg-[#f8fbfd] h-screen flex flex-col relative">
-            {/* Professional Header mimicking Screenshot 2025-12-19 style */}
             <header className="bg-white px-4 pt-6 pb-2 border-b border-slate-50 sticky top-0 z-30">
                 <div className="grid grid-cols-3 items-center h-10 mb-2">
                     <button onClick={onBack} className="justify-self-start p-1 -ml-1">
@@ -50,7 +49,7 @@ export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, nav
                     <h1 className="justify-self-center text-lg font-bold text-slate-800">审批列表</h1>
                     <div className="justify-self-end flex items-center space-x-2 border border-slate-200 rounded-full px-2 py-1">
                         <MoreIcon className="w-4 h-4 text-slate-800" />
-                        <MinusIcon className="w-4 h-4 text-slate-300" />
+                        <div className="w-4 h-4 text-slate-300 flex items-center justify-center"><MinusIcon className="w-3 h-3" /></div>
                         <BullseyeIcon className="w-4 h-4 text-slate-800" />
                     </div>
                 </div>
@@ -61,12 +60,12 @@ export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, nav
                             <button
                                 key={tab.name}
                                 onClick={() => setActiveMainTab(tab.name)}
-                                className={`flex items-center pb-2 px-1 font-bold text-sm relative transition-all ${
+                                className={`flex items-center pb-2 px-1 font-bold text-[15px] relative transition-all ${
                                     activeMainTab === tab.name ? 'text-slate-900' : 'text-slate-400'
                                 }`}
                             >
                                 {tab.name}
-                                {tab.badge && <span className="ml-1 text-[9px] font-black bg-red-500 text-white rounded-full px-1.5 py-0.5">{tab.badge}</span>}
+                                {tab.badge && <span className="ml-1 text-[11px] font-bold bg-red-500 text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center shadow-sm">{tab.badge}</span>}
                                 {activeMainTab === tab.name && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#5fc38f] rounded-full"></div>}
                             </button>
                         ))}
@@ -76,7 +75,7 @@ export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, nav
                             <button
                                 key={tab}
                                 onClick={() => setActiveSubTab(tab)}
-                                className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all ${
+                                className={`px-3 py-1 rounded-full text-[11px] font-semibold transition-all ${
                                     activeSubTab === tab ? 'bg-slate-800 text-white' : 'text-slate-400 border border-slate-100'
                                 }`}
                             >
@@ -87,7 +86,6 @@ export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, nav
                 </div>
             </header>
 
-            {/* Content List */}
             <main className="flex-grow overflow-y-auto p-4 space-y-3 pb-24">
                 {approvalsData.map(item => (
                     <div 
@@ -97,18 +95,18 @@ export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, nav
                     >
                         <div className="flex justify-between items-start mb-3">
                             <div className="flex items-center">
-                                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-500 border-2 border-white shadow-sm">
-                                    {item.submitter.slice(-2)}
+                                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-semibold text-blue-500 border-2 border-white shadow-sm">
+                                    <span className="text-sm">{item.submitter.slice(-2)}</span>
                                 </div>
                                 <div className="ml-3">
-                                    <h4 className="font-extrabold text-slate-800 text-[15px]">{item.submitter}</h4>
-                                    <div className="flex items-center text-[11px] text-slate-400 mt-0.5">
-                                        <ClockIcon className="w-3 h-3 mr-1" />
+                                    <h4 className="font-bold text-slate-800 text-base">{item.submitter}</h4>
+                                    <div className="flex items-center text-[12px] text-slate-400 mt-0.5 font-medium">
+                                        <ClockIcon className="w-3.5 h-3.5 mr-1" />
                                         <span>12-19 08:20</span>
                                     </div>
                                 </div>
                             </div>
-                            <span className="text-[10px] font-black text-[#5fc38f] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                            <span className="text-[11px] font-bold text-[#5fc38f] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100/50">
                                 {item.status}
                             </span>
                         </div>
@@ -117,7 +115,7 @@ export const OAApprovalPage = ({ onBack, navigateTo }: { onBack: () => void, nav
                             {getIcon(item.iconType)}
                             <div className="flex-grow">
                                 <p className="text-sm font-bold text-slate-800">{item.title}</p>
-                                <p className="text-[11px] text-slate-500 mt-1 line-clamp-1">{item.entity || item.period}</p>
+                                <p className="text-[12px] text-slate-500 mt-1 font-medium line-clamp-1">{item.entity || item.period}</p>
                             </div>
                             <ChevronRightIcon className="w-4 h-4 text-slate-300" />
                         </div>
